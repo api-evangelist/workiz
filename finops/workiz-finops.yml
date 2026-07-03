@@ -1,0 +1,96 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Workiz
+providerId: workiz
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- Field Service Management
+- FSM
+- Home Services
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Workiz spend. Workiz is a per-team SaaS subscription rather than
+  a usage-metered API. Cost is driven by the chosen plan tier (Lite free,
+  Standard, Pro, Ultimate/Enterprise) and the number of seats (team members),
+  billed monthly with an annual-commitment discount. The Developer API is an
+  included add-on and is not separately metered, so programmatic access does not
+  add per-call charges. Variable costs outside the subscription can include
+  integrated payment processing fees and communications (calls/SMS) usage where
+  applicable. Because billing is seat-based, the primary optimization levers are
+  right-sizing the plan tier and the number of active seats.
+notes: >-
+  Plan and seat prices are not reconciled here and vary across aggregators;
+  verify on the Workiz pricing page. Payment processing and communications fees,
+  if used, are separate from the SaaS subscription.
+sources:
+- https://www.workiz.com/pricing-plans/
+- https://developer.workiz.com/
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Workiz
+serviceCategory: Business Application Software
+billingModel:
+  pricingCategory: Subscription-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Usage
+  - Adjustment
+focusColumns:
+  ServiceName: Workiz
+  ServiceCategory: Business Application Software
+  ProviderName: Workiz
+  PublisherName: Workiz
+  InvoiceIssuerName: Workiz
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Subscription-Based
+meters:
+- name: subscription_seats
+  description: Number of team-member seats on the plan, the primary billing driver.
+  unit: seats
+  aggregation: max
+  dimensions:
+  - account
+  - plan
+- name: plan_tier
+  description: Subscription tier (Lite, Standard, Pro, Ultimate) that sets base price and feature caps.
+  unit: plan
+  aggregation: max
+  dimensions:
+  - account
+- name: payment_processing
+  description: Transaction fees on payments processed through Workiz, where used (separate from subscription).
+  unit: transactions
+  aggregation: sum
+  dimensions:
+  - account
+- name: communications
+  description: Calls and SMS usage through Workiz communications features, where applicable.
+  unit: messages
+  aggregation: sum
+  dimensions:
+  - account
+principles:
+- name: Visibility
+  description: Track active seats and plan tier against the monthly invoice; separate SaaS subscription from payment-processing and communications fees.
+- name: Allocation
+  description: Map seats to crews/roles so the subscription cost attributes to the teams using Workiz.
+- name: Optimization
+  description: Right-size the plan tier and deactivate unused seats; use the included Developer API to automate rather than buying additional tooling.
+- name: Accountability
+  description: Assign an owner to review seat count and plan tier before each renewal, and reconcile payment-processing fees against revenue.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

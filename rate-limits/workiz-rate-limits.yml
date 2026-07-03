@@ -1,0 +1,57 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Workiz
+providerId: workiz
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- Field Service Management
+- FSM
+- Home Services
+- Rate Limiting
+- Quotas
+description: >-
+  Workiz does not publish fixed numeric rate limits for its REST API. The API is
+  gated behind the Developer API add-on and authenticated with an account API
+  token placed in the request path, so throttling is applied per account. Errors,
+  including throttling, are returned as JSON with HTTP status codes; clients
+  should treat HTTP 429 as a throttle signal and back off. List endpoints (jobs,
+  leads) are paginated via records and offset parameters, so large data pulls
+  should page rather than request everything at once.
+notes: >-
+  No documented per-minute or per-day request ceiling is published as of the
+  review date. Confirm any account-specific limits with Workiz support, and
+  design integrations to page results and back off on 429.
+sources:
+- https://developer.workiz.com/
+- https://help.workiz.com/hc/en-us/articles/18053137531409-Accessing-your-Workiz-API-credentials
+responseCodes:
+  throttled: 429
+limits:
+- name: REST API Requests
+  scope: account
+  metric: requests
+  limit: not published
+  notes: No fixed numeric request-rate limit is documented for the Workiz REST API.
+- name: Job List Pagination
+  scope: account
+  metric: records
+  limit: configurable via records and offset
+  notes: The /job/all/ endpoint returns paginated results controlled by the records and offset query parameters.
+- name: Lead List Pagination
+  scope: account
+  metric: records
+  limit: configurable via records and offset
+  notes: The /lead/all/ endpoint returns paginated results controlled by the records and offset query parameters.
+policies:
+- name: Backoff Strategy
+  description: On HTTP 429, back off with exponential delay and jitter before retrying.
+- name: Pagination
+  description: Use records and offset to page through large job and lead datasets instead of unbounded reads.
+- name: Add-On Gating
+  description: API access requires the Developer API add-on enabled from the Feature Center / Marketplace; disabling it revokes the token.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,97 @@
+aid: workiz
+name: Workiz
+review:
+  question: Does Workiz expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-03'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Workiz's own public API surface is
+    request/response REST over HTTPS (base https://api.workiz.com/api/v1/ with
+    the account API token in the path). Workiz does deliver asynchronous events,
+    but through outbound webhooks - it POSTs a JSON payload to a customer-
+    configured HTTPS endpoint when a new job or new lead is created. That is
+    server-to-endpoint HTTP delivery, not a server-push WebSocket or SSE stream
+    on Workiz's own API, so there is no WebSocket transport to model.
+findings:
+  summary: |
+    Workiz does not publish a documented public WebSocket API. Workiz is field
+    service management software for home-service businesses. Its public
+    Developer API (enabled as an add-on from the Feature Center / Marketplace)
+    is a REST API. All calls are made to https://api.workiz.com/api/v1/ with the
+    account API token embedded directly in the URL path
+    (https://api.workiz.com/api/v1/{api_token}/...); a paired API secret is
+    issued for signed requests. Responses are JSON and HTTP status codes signal
+    errors. The confirmed REST surface covers jobs (list/get/create/update/
+    assign/unassign), a job payment operation, leads (list/get), team members
+    (list/get), and time off (account and per-user). Near-real-time integration
+    is provided by outbound webhooks (new-job and new-lead events) delivered over
+    HTTPS, not by a WebSocket. No realtime, bidirectional, or streaming WebSocket
+    (ws:// or wss://) endpoint is documented anywhere in Workiz's developer
+    materials as of the review date.
+  authentication: |
+    The account API token is placed in the request path rather than an
+    Authorization header. Credentials (token and secret) come from Settings >
+    Integrations after enabling the Developer API add-on.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.workiz.com/api/v1/{api_token}
+      documented: true
+      note: Token-in-path REST API. JSON responses; HTTP status codes for errors.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: Outbound webhooks POST new-job / new-lead event payloads to a customer-configured HTTPS endpoint. Server-to-endpoint HTTP, not WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in Workiz's developer docs or SDKs as of the review date.
+  endpointsConfirmedRest:
+    - GET  https://api.workiz.com/api/v1/{api_token}/job/all/
+    - GET  https://api.workiz.com/api/v1/{api_token}/job/get/{UUID}/
+    - POST https://api.workiz.com/api/v1/{api_token}/job/create/
+    - POST https://api.workiz.com/api/v1/{api_token}/job/update/
+    - POST https://api.workiz.com/api/v1/{api_token}/job/assign/
+    - POST https://api.workiz.com/api/v1/{api_token}/job/unassign/
+    - POST https://api.workiz.com/api/v1/{api_token}/job/addPayment/{UUID}/
+    - GET  https://api.workiz.com/api/v1/{api_token}/lead/all/
+    - GET  https://api.workiz.com/api/v1/{api_token}/lead/get/{UUID}/
+    - GET  https://api.workiz.com/api/v1/{api_token}/team/all/
+    - GET  https://api.workiz.com/api/v1/{api_token}/team/get/{USER_ID}/
+    - GET  https://api.workiz.com/api/v1/{api_token}/timeoff/get/
+    - GET  https://api.workiz.com/api/v1/{api_token}/timeoff/get/{USER_NAME}/
+  endpointsModeled:
+    - POST https://api.workiz.com/api/v1/{api_token}/lead/create/
+    - POST https://api.workiz.com/api/v1/{api_token}/lead/update/
+    - Webhook (outbound) - New Job Created event
+    - Webhook (outbound) - New Lead Created event
+sources:
+  - url: https://developer.workiz.com/
+    type: Documentation
+    note: Official Workiz API reference (JS-rendered developer portal). REST base https://api.workiz.com/api/v1/; no WebSocket mentioned.
+  - url: https://help.workiz.com/hc/en-us/articles/18053137531409-Accessing-your-Workiz-API-credentials
+    type: Documentation
+    note: How to enable the Developer API add-on and obtain the API token and secret.
+  - url: https://github.com/forward-force/workiz
+    type: SourceCode
+    note: Community PHP SDK. Confirms base URL https://api.workiz.com/api/v1/{token}/ and job/lead/timeoff endpoint paths; token-in-path auth.
+  - url: https://dlthub.com/context/source/workiz
+    type: Documentation
+    note: dltHub Workiz source confirms job/all, job/get, lead/all, lead/get, team/all, team/get, timeoff/get endpoints.
+  - url: https://apps.make.com/workiz-qjn6e1
+    type: Documentation
+    note: Make integration lists job/lead create/update/search/assign actions and instant (webhook) triggers for new jobs and new leads.
+  - url: https://www.workiz.com/pricing-plans/
+    type: Documentation
+    note: Per-team subscription pricing (Lite free, Standard, Pro, Ultimate); seat-based.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. Workiz's own public API is
+    request/response REST (token-in-path) plus outbound webhooks for new-job and
+    new-lead events. No AsyncAPI document was created because there is no
+    server-push WebSocket or SSE transport on Workiz's own API to model; the
+    asynchronous delivery is HTTP webhook callbacks to customer endpoints.

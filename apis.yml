@@ -1,0 +1,173 @@
+aid: workiz
+url: https://raw.githubusercontent.com/api-evangelist/workiz/refs/heads/main/apis.yml
+name: Workiz
+kind: company
+description: Workiz is field service management (FSM) software for home-service
+  businesses - HVAC, plumbing, electrical, appliance repair, garage doors, locksmiths,
+  carpet cleaning, and similar trades. It combines scheduling and dispatch, a CRM,
+  jobs and leads, estimates and invoicing, payments, and communications (calls, SMS,
+  email) in one platform. Workiz exposes a documented REST API (the Developer API
+  add-on) for reading and writing jobs, leads, team members, time off, and payments,
+  plus outbound webhooks for new-job and new-lead events. All calls are made to
+  https://api.workiz.com/api/v1/ with the account API token embedded in the request
+  path.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Field Service Management
+- FSM
+- Home Services
+- Scheduling
+- Dispatch
+- CRM
+- Jobs
+- Invoicing
+created: '2026-07-03'
+modified: '2026-07-03'
+specificationVersion: '0.19'
+apis:
+- aid: workiz:workiz-jobs-api
+  name: Workiz Jobs API
+  tags:
+  - Jobs
+  - Scheduling
+  - Dispatch
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.workiz.com/
+  baseURL: https://api.workiz.com/api/v1
+  properties:
+  - url: https://developer.workiz.com/
+    type: Documentation
+  - url: https://developer.workiz.com/
+    type: APIReference
+  - url: openapi/workiz-openapi.yml
+    type: OpenAPI
+  - url: collections/workiz.postman_collection.json
+    type: PostmanCollection
+  - url: collections/workiz.opencollection.json
+    type: OpenCollection
+  description: List and retrieve jobs, create and update jobs, and assign or unassign
+    team members to a job. Jobs are the core work order in Workiz and carry the
+    client details, location, scheduled time, line items, status, and assigned crew.
+    List queries support filters such as records, offset, only_open, and status.
+- aid: workiz:workiz-leads-api
+  name: Workiz Leads API
+  tags:
+  - Leads
+  - CRM
+  - Sales
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.workiz.com/
+  baseURL: https://api.workiz.com/api/v1
+  properties:
+  - url: https://developer.workiz.com/
+    type: Documentation
+  - url: openapi/workiz-openapi.yml
+    type: OpenAPI
+  - url: collections/workiz.postman_collection.json
+    type: PostmanCollection
+  - url: collections/workiz.opencollection.json
+    type: OpenCollection
+  description: List and retrieve leads and manage their lifecycle - create and update
+    leads and mark a lead as active or lost. Leads are prospective work that can be
+    converted into jobs. List and single-record reads are confirmed in the public
+    API; write and status-change operations are exposed through Workiz integration
+    partners and modeled here.
+- aid: workiz:workiz-team-api
+  name: Workiz Team API
+  tags:
+  - Team
+  - Technicians
+  - Users
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.workiz.com/
+  baseURL: https://api.workiz.com/api/v1
+  properties:
+  - url: https://developer.workiz.com/
+    type: Documentation
+  - url: openapi/workiz-openapi.yml
+    type: OpenAPI
+  - url: collections/workiz.postman_collection.json
+    type: PostmanCollection
+  - url: collections/workiz.opencollection.json
+    type: OpenCollection
+  description: List team members (technicians, dispatchers, and office users) and
+    retrieve a single team member by user ID. Team members are the users you assign
+    to jobs and whose availability and time off drive scheduling.
+- aid: workiz:workiz-time-off-api
+  name: Workiz Time Off API
+  tags:
+  - Time Off
+  - Availability
+  - Scheduling
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.workiz.com/
+  baseURL: https://api.workiz.com/api/v1
+  properties:
+  - url: https://developer.workiz.com/
+    type: Documentation
+  - url: openapi/workiz-openapi.yml
+    type: OpenAPI
+  - url: collections/workiz.postman_collection.json
+    type: PostmanCollection
+  - url: collections/workiz.opencollection.json
+    type: OpenCollection
+  description: Retrieve time-off records for the account or for a specific user by
+    name. Time off blocks a technician's availability and is a scheduling input for
+    dispatch and job assignment.
+- aid: workiz:workiz-payments-api
+  name: Workiz Payments API
+  tags:
+  - Payments
+  - Invoicing
+  - Billing
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.workiz.com/
+  baseURL: https://api.workiz.com/api/v1
+  properties:
+  - url: https://developer.workiz.com/
+    type: Documentation
+  - url: openapi/workiz-openapi.yml
+    type: OpenAPI
+  - url: collections/workiz.postman_collection.json
+    type: PostmanCollection
+  - url: collections/workiz.opencollection.json
+    type: OpenCollection
+  description: Record a payment against a job by its UUID. Workiz tracks invoices,
+    estimates, and payments against jobs; the public API surfaces adding a payment
+    to a job, which advances the job toward a paid state.
+- aid: workiz:workiz-webhooks
+  name: Workiz Webhooks
+  tags:
+  - Webhooks
+  - Events
+  - Notifications
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://developer.workiz.com/
+  baseURL: https://api.workiz.com/api/v1
+  properties:
+  - url: https://developer.workiz.com/
+    type: Documentation
+  - url: openapi/workiz-openapi.yml
+    type: OpenAPI
+  description: Outbound webhooks that push events to a configured HTTPS endpoint when
+    a new job is created or a new lead arrives, enabling near-real-time integrations
+    without polling. Workiz posts the event payload to your URL. This is server-to-endpoint
+    HTTP delivery, not a WebSocket. Webhook subscription is offered through the
+    Developer API add-on and Workiz integration partners; the endpoint payloads are
+    modeled here.
+common:
+- type: LinkedIn
+  url: https://www.linkedin.com/company/workiz
+- type: Website
+  url: https://www.workiz.com
+- type: Documentation
+  url: https://developer.workiz.com/
+- type: Plans
+  url: plans/workiz-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/workiz-rate-limits.yml
+- type: FinOps
+  url: finops/workiz-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,150 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Workiz
+providerId: workiz
+created: '2026-07-03'
+modified: '2026-07-03'
+reconciled: false
+tags:
+- Field Service Management
+- FSM
+- Home Services
+- Plans
+- Subscription
+description: >-
+  Workiz is sold as a per-team SaaS subscription, not as a metered API product.
+  Pricing is tiered by plan and by the number of seats (team members), billed
+  monthly with a discount for annual commitment. A free Lite plan supports up to
+  2 users with a monthly cap on jobs, invoices, and estimates. Paid plans
+  (commonly named Standard, Pro, and a top Ultimate/Enterprise tier) raise those
+  caps and unlock features; additional team members are billed per seat. The
+  Developer API is delivered as an add-on enabled from the Feature Center /
+  Marketplace and is not separately metered - API usage is included with the
+  subscription. Exact figures move over time and differ across aggregators;
+  confirm current numbers on the Workiz pricing page.
+notes: >-
+  Prices below are indicative of publicly reported 2025-2026 figures and are not
+  reconciled. Workiz does not publish every plan price openly and quotes some
+  tiers on request. The Developer API add-on gates programmatic access; verify it
+  is available on your plan.
+sources:
+- https://www.workiz.com/pricing-plans/
+- https://developer.workiz.com/
+- https://help.workiz.com/hc/en-us/articles/18053137531409-Accessing-your-Workiz-API-credentials
+plans:
+- id: workiz-lite
+  name: Lite (Free)
+  type: free
+  description: >-
+    Free plan for up to 2 users with a monthly cap of roughly 20 jobs, invoices,
+    and estimates. Good for evaluating Workiz; Developer API availability depends
+    on the plan and the API add-on.
+  entries:
+  - label: Included Seats
+    name: lite_seats
+    type: flat
+    metric: seats
+    limit: 2
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: '0'
+    userMultiplied: false
+  elements:
+  - name: Scheduling and Dispatch
+  - name: Jobs and Leads
+  - name: Basic Invoicing
+- id: workiz-standard
+  name: Standard
+  type: paid
+  description: >-
+    Core paid plan for small crews, bundling scheduling, CRM, invoicing, and
+    reporting for a base number of seats, with additional seats billed per user.
+    Publicly reported around $198-$225 per month depending on annual vs monthly
+    billing.
+  entries:
+  - label: Base Subscription
+    name: standard_base
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: ~$198-$225/month (base seats; see pricing page)
+    userMultiplied: false
+  - label: Additional Team Member
+    name: standard_extra_seat
+    type: flat
+    metric: seats
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: ~$46-$55 per extra member/month
+    userMultiplied: true
+  elements:
+  - name: Scheduling and Dispatch
+  - name: CRM
+  - name: Invoicing and Estimates
+  - name: Reporting
+  - name: Developer API Add-On
+- id: workiz-pro
+  name: Pro
+  type: paid
+  description: >-
+    Higher tier adding automations, advanced reporting, and additional
+    communication and workflow features. Publicly reported around $270 per month
+    for the base, with additional seats billed per user.
+  entries:
+  - label: Base Subscription
+    name: pro_base
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: ~$270/month (base seats; see pricing page)
+    userMultiplied: false
+  - label: Additional Team Member
+    name: pro_extra_seat
+    type: flat
+    metric: seats
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: ~$54-$65 per extra member/month
+    userMultiplied: true
+  elements:
+  - name: Everything in Standard
+  - name: Automations
+  - name: Advanced Reporting
+  - name: Developer API Add-On
+- id: workiz-ultimate
+  name: Ultimate / Enterprise
+  type: enterprise
+  description: >-
+    Top tier for larger operations with custom limits, premium support, and
+    advanced features. Priced on request.
+  entries:
+  - label: Enterprise Agreement
+    name: ultimate
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Everything in Pro
+  - name: Custom Seat Limits
+  - name: Premium Support
+  - name: Developer API Add-On
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

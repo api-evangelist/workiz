@@ -1,0 +1,218 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Workiz API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": { "name": "Jobs", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List jobs.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.workiz.com/api/v1/{api_token}/job/all/",
+            "params": [
+              { "name": "api_token", "value": "", "type": "path", "description": "Account API token, part of the base path." },
+              { "name": "records", "value": "100", "type": "query", "description": "Records per page." },
+              { "name": "offset", "value": "0", "type": "query", "description": "Records to skip." },
+              { "name": "only_open", "value": "true", "type": "query", "description": "Return only open jobs." },
+              { "name": "status", "value": "", "type": "query", "description": "Filter by job status." }
+            ]
+          },
+          "docs": "Returns a paginated list of jobs."
+        },
+        {
+          "info": { "name": "Get a job.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.workiz.com/api/v1/{api_token}/job/get/:UUID/",
+            "params": [
+              { "name": "api_token", "value": "", "type": "path", "description": "Account API token." },
+              { "name": "UUID", "value": "", "type": "path", "description": "The UUID of the job." }
+            ]
+          },
+          "docs": "Retrieves a single job by its UUID."
+        },
+        {
+          "info": { "name": "Create a job.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.workiz.com/api/v1/{api_token}/job/create/",
+            "params": [
+              { "name": "api_token", "value": "", "type": "path", "description": "Account API token." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"JobType\": \"Service Call\",\n  \"JobDateTime\": \"2026-07-10 09:00:00\"\n}" }
+          },
+          "docs": "Creates a new job (work order)."
+        },
+        {
+          "info": { "name": "Update a job.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.workiz.com/api/v1/{api_token}/job/update/",
+            "params": [
+              { "name": "api_token", "value": "", "type": "path", "description": "Account API token." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"UUID\": \"\"\n}" }
+          },
+          "docs": "Updates an existing job. The job UUID is in the request body."
+        },
+        {
+          "info": { "name": "Assign a user to a job.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.workiz.com/api/v1/{api_token}/job/assign/",
+            "params": [
+              { "name": "api_token", "value": "", "type": "path", "description": "Account API token." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"UUID\": \"\",\n  \"User\": \"\"\n}" }
+          },
+          "docs": "Assigns a team member to an existing job."
+        },
+        {
+          "info": { "name": "Unassign a user from a job.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.workiz.com/api/v1/{api_token}/job/unassign/",
+            "params": [
+              { "name": "api_token", "value": "", "type": "path", "description": "Account API token." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"UUID\": \"\",\n  \"User\": \"\"\n}" }
+          },
+          "docs": "Removes a team member from an existing job."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Payments", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Add a payment to a job.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.workiz.com/api/v1/{api_token}/job/addPayment/:UUID/",
+            "params": [
+              { "name": "api_token", "value": "", "type": "path", "description": "Account API token." },
+              { "name": "UUID", "value": "", "type": "path", "description": "The UUID of the job." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"amount\": 150.00,\n  \"paymentMethod\": \"credit_card\"\n}" }
+          },
+          "docs": "Records a payment against a job by its UUID. Payment body fields are modeled."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Leads", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List leads.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.workiz.com/api/v1/{api_token}/lead/all/",
+            "params": [
+              { "name": "api_token", "value": "", "type": "path", "description": "Account API token." },
+              { "name": "records", "value": "100", "type": "query", "description": "Records per page." },
+              { "name": "offset", "value": "0", "type": "query", "description": "Records to skip." }
+            ]
+          },
+          "docs": "Returns a paginated list of leads."
+        },
+        {
+          "info": { "name": "Get a lead.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.workiz.com/api/v1/{api_token}/lead/get/:UUID/",
+            "params": [
+              { "name": "api_token", "value": "", "type": "path", "description": "Account API token." },
+              { "name": "UUID", "value": "", "type": "path", "description": "The UUID of the lead." }
+            ]
+          },
+          "docs": "Retrieves a single lead by its UUID."
+        },
+        {
+          "info": { "name": "Create a lead (modeled).", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.workiz.com/api/v1/{api_token}/lead/create/",
+            "params": [
+              { "name": "api_token", "value": "", "type": "path", "description": "Account API token." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"LeadType\": \"Estimate\"\n}" }
+          },
+          "docs": "Creates a new lead. Exposed via integration partners; request shape modeled."
+        },
+        {
+          "info": { "name": "Update a lead (modeled).", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.workiz.com/api/v1/{api_token}/lead/update/",
+            "params": [
+              { "name": "api_token", "value": "", "type": "path", "description": "Account API token." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"UUID\": \"\",\n  \"Status\": \"active\"\n}" }
+          },
+          "docs": "Updates a lead, including marking it active or lost. Request shape modeled."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Team", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List team members.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.workiz.com/api/v1/{api_token}/team/all/",
+            "params": [
+              { "name": "api_token", "value": "", "type": "path", "description": "Account API token." }
+            ]
+          },
+          "docs": "Returns all team members (technicians, dispatchers, office users)."
+        },
+        {
+          "info": { "name": "Get a team member.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.workiz.com/api/v1/{api_token}/team/get/:USER_ID/",
+            "params": [
+              { "name": "api_token", "value": "", "type": "path", "description": "Account API token." },
+              { "name": "USER_ID", "value": "", "type": "path", "description": "The user ID of the team member." }
+            ]
+          },
+          "docs": "Retrieves a single team member by user ID."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Time Off", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List time off.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.workiz.com/api/v1/{api_token}/timeoff/get/",
+            "params": [
+              { "name": "api_token", "value": "", "type": "path", "description": "Account API token." }
+            ]
+          },
+          "docs": "Returns time-off records for the account."
+        },
+        {
+          "info": { "name": "Get time off for a user.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.workiz.com/api/v1/{api_token}/timeoff/get/:USER_NAME/",
+            "params": [
+              { "name": "api_token", "value": "", "type": "path", "description": "Account API token." },
+              { "name": "USER_NAME", "value": "", "type": "path", "description": "The user name whose time off to retrieve." }
+            ]
+          },
+          "docs": "Returns the time-off records for a specific user by name."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

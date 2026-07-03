@@ -1,0 +1,254 @@
+{
+  "info": {
+    "name": "Workiz API",
+    "description": "Workiz field service management REST API. Base URL: https://api.workiz.com/api/v1/{{apiToken}}/ - the account API token is part of the path (enable the Developer API add-on from the Workiz Feature Center / Marketplace, then copy the token and secret from Settings > Integrations). Responses are JSON. Endpoints for jobs, leads, team, time off, and payments; new-job and new-lead events are delivered via outbound webhooks.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.workiz.com/api/v1", "type": "string" },
+    { "key": "apiToken", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Jobs",
+      "item": [
+        {
+          "name": "List jobs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/{{apiToken}}/job/all/?records=100&offset=0&only_open=true",
+              "host": ["{{baseUrl}}"],
+              "path": ["{{apiToken}}", "job", "all", ""],
+              "query": [
+                { "key": "records", "value": "100" },
+                { "key": "offset", "value": "0" },
+                { "key": "only_open", "value": "true" }
+              ]
+            },
+            "description": "Returns a paginated list of jobs. Filter with records, offset, only_open, start_date, and status."
+          }
+        },
+        {
+          "name": "Get a job",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/{{apiToken}}/job/get/:UUID/",
+              "host": ["{{baseUrl}}"],
+              "path": ["{{apiToken}}", "job", "get", ":UUID", ""],
+              "variable": [{ "key": "UUID", "value": "" }]
+            },
+            "description": "Retrieves a single job by its UUID."
+          }
+        },
+        {
+          "name": "Create a job",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"JobType\": \"Service Call\",\n  \"JobDateTime\": \"2026-07-10 09:00:00\",\n  \"FirstName\": \"Jane\",\n  \"LastName\": \"Doe\",\n  \"Phone\": \"5551234567\",\n  \"Address\": \"123 Main St\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/{{apiToken}}/job/create/",
+              "host": ["{{baseUrl}}"],
+              "path": ["{{apiToken}}", "job", "create", ""]
+            },
+            "description": "Creates a new job (work order)."
+          }
+        },
+        {
+          "name": "Update a job",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"UUID\": \"\",\n  \"JobDateTime\": \"2026-07-11 13:00:00\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/{{apiToken}}/job/update/",
+              "host": ["{{baseUrl}}"],
+              "path": ["{{apiToken}}", "job", "update", ""]
+            },
+            "description": "Updates an existing job. The job UUID is in the request body."
+          }
+        },
+        {
+          "name": "Assign a user to a job",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"UUID\": \"\",\n  \"User\": \"\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/{{apiToken}}/job/assign/",
+              "host": ["{{baseUrl}}"],
+              "path": ["{{apiToken}}", "job", "assign", ""]
+            },
+            "description": "Assigns a team member to an existing job."
+          }
+        },
+        {
+          "name": "Unassign a user from a job",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"UUID\": \"\",\n  \"User\": \"\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/{{apiToken}}/job/unassign/",
+              "host": ["{{baseUrl}}"],
+              "path": ["{{apiToken}}", "job", "unassign", ""]
+            },
+            "description": "Removes a team member from an existing job."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Add a payment to a job",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"amount\": 150.00,\n  \"paymentMethod\": \"credit_card\",\n  \"date\": \"2026-07-10\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/{{apiToken}}/job/addPayment/:UUID/",
+              "host": ["{{baseUrl}}"],
+              "path": ["{{apiToken}}", "job", "addPayment", ":UUID", ""],
+              "variable": [{ "key": "UUID", "value": "" }]
+            },
+            "description": "Records a payment against a job by its UUID. Payment body fields are modeled."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Leads",
+      "item": [
+        {
+          "name": "List leads",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/{{apiToken}}/lead/all/?records=100&offset=0",
+              "host": ["{{baseUrl}}"],
+              "path": ["{{apiToken}}", "lead", "all", ""],
+              "query": [
+                { "key": "records", "value": "100" },
+                { "key": "offset", "value": "0" }
+              ]
+            },
+            "description": "Returns a paginated list of leads."
+          }
+        },
+        {
+          "name": "Get a lead",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/{{apiToken}}/lead/get/:UUID/",
+              "host": ["{{baseUrl}}"],
+              "path": ["{{apiToken}}", "lead", "get", ":UUID", ""],
+              "variable": [{ "key": "UUID", "value": "" }]
+            },
+            "description": "Retrieves a single lead by its UUID."
+          }
+        },
+        {
+          "name": "Create a lead (modeled)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"LeadType\": \"Estimate\",\n  \"FirstName\": \"John\",\n  \"LastName\": \"Smith\",\n  \"Phone\": \"5559876543\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/{{apiToken}}/lead/create/",
+              "host": ["{{baseUrl}}"],
+              "path": ["{{apiToken}}", "lead", "create", ""]
+            },
+            "description": "Creates a new lead. Exposed via integration partners; request shape modeled."
+          }
+        },
+        {
+          "name": "Update a lead (modeled)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"UUID\": \"\",\n  \"Status\": \"active\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/{{apiToken}}/lead/update/",
+              "host": ["{{baseUrl}}"],
+              "path": ["{{apiToken}}", "lead", "update", ""]
+            },
+            "description": "Updates a lead, including marking it active or lost. Request shape modeled."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Team",
+      "item": [
+        {
+          "name": "List team members",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/{{apiToken}}/team/all/",
+              "host": ["{{baseUrl}}"],
+              "path": ["{{apiToken}}", "team", "all", ""]
+            },
+            "description": "Returns all team members (technicians, dispatchers, office users)."
+          }
+        },
+        {
+          "name": "Get a team member",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/{{apiToken}}/team/get/:USER_ID/",
+              "host": ["{{baseUrl}}"],
+              "path": ["{{apiToken}}", "team", "get", ":USER_ID", ""],
+              "variable": [{ "key": "USER_ID", "value": "" }]
+            },
+            "description": "Retrieves a single team member by user ID."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Time Off",
+      "item": [
+        {
+          "name": "List time off",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/{{apiToken}}/timeoff/get/",
+              "host": ["{{baseUrl}}"],
+              "path": ["{{apiToken}}", "timeoff", "get", ""]
+            },
+            "description": "Returns time-off records for the account."
+          }
+        },
+        {
+          "name": "Get time off for a user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/{{apiToken}}/timeoff/get/:USER_NAME/",
+              "host": ["{{baseUrl}}"],
+              "path": ["{{apiToken}}", "timeoff", "get", ":USER_NAME", ""],
+              "variable": [{ "key": "USER_NAME", "value": "" }]
+            },
+            "description": "Returns the time-off records for a specific user by name."
+          }
+        }
+      ]
+    }
+  ]
+}
