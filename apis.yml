@@ -156,6 +156,10 @@ apis:
     Developer API add-on and Workiz integration partners; the endpoint payloads are
     modeled here.
 common:
+- type: DomainSecurity
+  url: security/workiz-domain-security.yml
+- type: Blog
+  url: https://www.workiz.com/blog/
 - type: LinkedIn
   url: https://www.linkedin.com/company/workiz
 - type: Website
