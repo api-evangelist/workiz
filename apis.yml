@@ -156,6 +156,8 @@ apis:
     Developer API add-on and Workiz integration partners; the endpoint payloads are
     modeled here.
 common:
+- type: AgenticAccess
+  url: agentic-access/workiz-agentic-access.yml
 - type: DomainSecurity
   url: security/workiz-domain-security.yml
 - type: Blog
