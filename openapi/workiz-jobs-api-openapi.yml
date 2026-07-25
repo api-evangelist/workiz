@@ -1,0 +1,380 @@
+openapi: 3.0.3
+info:
+  title: Workiz Jobs API
+  description: 'The Workiz REST API lets home-service businesses read and write their field service data - jobs, leads, team members, time off, and payments - and receive outbound webhooks for new jobs and new leads. Workiz is field service management (FSM) software covering scheduling and dispatch, CRM, estimates and invoicing, payments, and communications.
+
+
+    All calls are made to https://api.workiz.com/api/v1/ with the account API token embedded directly in the request path (https://api.workiz.com/api/v1/{api_token}/...). To obtain credentials, enable the Developer API add-on from the Workiz Feature Center / Marketplace and copy the API token (and secret) from Settings > Integrations. Responses are JSON, and HTTP status codes signal errors.
+
+
+    Endpoint coverage is marked per operation with `x-endpoint-status`: `confirmed` operations are grounded in Workiz''s public developer docs and the community PHP/Python SDKs; `modeled` operations (some Lead writes, the Payments detail, and the webhook payloads) reflect capabilities exposed through Workiz''s UI and integration partners (Make, Pipedream) whose exact request/response shapes are gated behind the authenticated developer portal and are represented here as a best-effort model.'
+  version: '1.0'
+  contact:
+    name: Workiz
+    url: https://developer.workiz.com/
+servers:
+- url: https://api.workiz.com/api/v1/{api_token}
+  description: Workiz REST API. The account API token is part of the base path.
+  variables:
+    api_token:
+      default: YOUR_API_TOKEN
+      description: The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.
+tags:
+- name: Jobs
+  description: Work orders - the core scheduling and dispatch entity in Workiz.
+paths:
+  /job/all/:
+    get:
+      operationId: listJobs
+      tags:
+      - Jobs
+      summary: List jobs
+      description: Returns a paginated list of jobs. Supports filtering by open state and status, and offset-based pagination.
+      x-endpoint-status: confirmed
+      parameters:
+      - name: records
+        in: query
+        required: false
+        description: Number of records to return per page.
+        schema:
+          type: integer
+          default: 100
+      - name: offset
+        in: query
+        required: false
+        description: Number of records to skip for pagination.
+        schema:
+          type: integer
+          default: 0
+      - name: only_open
+        in: query
+        required: false
+        description: When true, return only open (not closed/cancelled) jobs.
+        schema:
+          type: boolean
+      - name: start_date
+        in: query
+        required: false
+        description: Filter jobs on or after this date (YYYY-MM-DD).
+        schema:
+          type: string
+          format: date
+      - name: status
+        in: query
+        required: false
+        description: Filter jobs by status label (for example Scheduled, In Progress, Done).
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A list of jobs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /job/get/{UUID}/:
+    parameters:
+    - $ref: '#/components/parameters/JobUUID'
+    get:
+      operationId: getJob
+      tags:
+      - Jobs
+      summary: Get a job
+      description: Retrieves a single job by its UUID.
+      x-endpoint-status: confirmed
+      responses:
+        '200':
+          description: The requested job.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /job/create/:
+    post:
+      operationId: createJob
+      tags:
+      - Jobs
+      summary: Create a job
+      description: Creates a new job (work order) in the account.
+      x-endpoint-status: confirmed
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobInput'
+      responses:
+        '200':
+          description: The created job.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /job/update/:
+    post:
+      operationId: updateJob
+      tags:
+      - Jobs
+      summary: Update a job
+      description: Updates an existing job. The job UUID is supplied in the request body.
+      x-endpoint-status: confirmed
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobUpdateInput'
+      responses:
+        '200':
+          description: The updated job.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /job/assign/:
+    post:
+      operationId: assignJob
+      tags:
+      - Jobs
+      summary: Assign a user to a job
+      description: Assigns a team member to an existing job.
+      x-endpoint-status: confirmed
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobAssignmentInput'
+      responses:
+        '200':
+          description: Assignment result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /job/unassign/:
+    post:
+      operationId: unassignJob
+      tags:
+      - Jobs
+      summary: Unassign a user from a job
+      description: Removes a team member from an existing job.
+      x-endpoint-status: confirmed
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobAssignmentInput'
+      responses:
+        '200':
+          description: Unassignment result.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    LineItem:
+      type: object
+      properties:
+        name:
+          type: string
+        quantity:
+          type: number
+        unitPrice:
+          type: number
+        taxable:
+          type: boolean
+    JobResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/Job'
+    JobUpdateInput:
+      allOf:
+      - type: object
+        required:
+        - UUID
+        properties:
+          UUID:
+            type: string
+      - $ref: '#/components/schemas/JobInput'
+    JobListResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Job'
+        has_more:
+          type: boolean
+    Job:
+      type: object
+      description: A Workiz job (work order).
+      properties:
+        UUID:
+          type: string
+        SerialId:
+          type: integer
+        JobType:
+          type: string
+        JobSource:
+          type: string
+        JobDateTime:
+          type: string
+          format: date-time
+        JobEndDateTime:
+          type: string
+          format: date-time
+        Status:
+          type: string
+        SubStatus:
+          type: string
+        JobTotalPrice:
+          type: number
+        JobAmountDue:
+          type: number
+        ClientId:
+          type: integer
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        Phone:
+          type: string
+        Email:
+          type: string
+        Address:
+          type: string
+        City:
+          type: string
+        State:
+          type: string
+        PostalCode:
+          type: string
+        Country:
+          type: string
+        Latitude:
+          type: number
+        Longitude:
+          type: number
+        Team:
+          type: array
+          items:
+            type: string
+          description: Names or IDs of assigned team members.
+        CreatedDate:
+          type: string
+          format: date-time
+    JobAssignmentInput:
+      type: object
+      required:
+      - UUID
+      - User
+      properties:
+        UUID:
+          type: string
+          description: The UUID of the job.
+        User:
+          type: string
+          description: The user (team member) to assign or unassign.
+    JobInput:
+      type: object
+      required:
+      - JobType
+      - JobDateTime
+      properties:
+        JobType:
+          type: string
+        JobSource:
+          type: string
+        JobDateTime:
+          type: string
+          format: date-time
+        JobEndDateTime:
+          type: string
+          format: date-time
+        Comments:
+          type: string
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        Phone:
+          type: string
+        Email:
+          type: string
+        Address:
+          type: string
+        City:
+          type: string
+        State:
+          type: string
+        PostalCode:
+          type: string
+        LineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+    Error:
+      type: object
+      properties:
+        flag:
+          type: boolean
+          description: Workiz success flag; false on error.
+        code:
+          type: integer
+        data:
+          type: string
+          description: Human-readable error message.
+    GenericResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+          description: Success flag.
+        data:
+          type: object
+          additionalProperties: true
+  responses:
+    Unauthorized:
+      description: Missing or invalid API token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    JobUUID:
+      name: UUID
+      in: path
+      required: true
+      description: The UUID of the job.
+      schema:
+        type: string

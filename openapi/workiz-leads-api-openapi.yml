@@ -1,0 +1,253 @@
+openapi: 3.0.3
+info:
+  title: Workiz Jobs Leads API
+  description: 'The Workiz REST API lets home-service businesses read and write their field service data - jobs, leads, team members, time off, and payments - and receive outbound webhooks for new jobs and new leads. Workiz is field service management (FSM) software covering scheduling and dispatch, CRM, estimates and invoicing, payments, and communications.
+
+
+    All calls are made to https://api.workiz.com/api/v1/ with the account API token embedded directly in the request path (https://api.workiz.com/api/v1/{api_token}/...). To obtain credentials, enable the Developer API add-on from the Workiz Feature Center / Marketplace and copy the API token (and secret) from Settings > Integrations. Responses are JSON, and HTTP status codes signal errors.
+
+
+    Endpoint coverage is marked per operation with `x-endpoint-status`: `confirmed` operations are grounded in Workiz''s public developer docs and the community PHP/Python SDKs; `modeled` operations (some Lead writes, the Payments detail, and the webhook payloads) reflect capabilities exposed through Workiz''s UI and integration partners (Make, Pipedream) whose exact request/response shapes are gated behind the authenticated developer portal and are represented here as a best-effort model.'
+  version: '1.0'
+  contact:
+    name: Workiz
+    url: https://developer.workiz.com/
+servers:
+- url: https://api.workiz.com/api/v1/{api_token}
+  description: Workiz REST API. The account API token is part of the base path.
+  variables:
+    api_token:
+      default: YOUR_API_TOKEN
+      description: The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.
+tags:
+- name: Leads
+  description: Prospective work that can be converted into jobs.
+paths:
+  /lead/all/:
+    get:
+      operationId: listLeads
+      tags:
+      - Leads
+      summary: List leads
+      description: Returns a paginated list of leads. Supports offset-based pagination.
+      x-endpoint-status: confirmed
+      parameters:
+      - name: records
+        in: query
+        required: false
+        description: Number of records to return per page.
+        schema:
+          type: integer
+          default: 100
+      - name: offset
+        in: query
+        required: false
+        description: Number of records to skip for pagination.
+        schema:
+          type: integer
+          default: 0
+      responses:
+        '200':
+          description: A list of leads.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /lead/get/{UUID}/:
+    parameters:
+    - $ref: '#/components/parameters/LeadUUID'
+    get:
+      operationId: getLead
+      tags:
+      - Leads
+      summary: Get a lead
+      description: Retrieves a single lead by its UUID.
+      x-endpoint-status: confirmed
+      responses:
+        '200':
+          description: The requested lead.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /lead/create/:
+    post:
+      operationId: createLead
+      tags:
+      - Leads
+      summary: Create a lead
+      description: Creates a new lead. Exposed through Workiz integration partners; request shape modeled here.
+      x-endpoint-status: modeled
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeadInput'
+      responses:
+        '200':
+          description: The created lead.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /lead/update/:
+    post:
+      operationId: updateLead
+      tags:
+      - Leads
+      summary: Update a lead
+      description: Updates an existing lead. Exposed through Workiz integration partners; request shape modeled here.
+      x-endpoint-status: modeled
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeadUpdateInput'
+      responses:
+        '200':
+          description: The updated lead.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    LeadUpdateInput:
+      allOf:
+      - type: object
+        required:
+        - UUID
+        properties:
+          UUID:
+            type: string
+          Status:
+            type: string
+            enum:
+            - active
+            - lost
+            description: Mark the lead active or lost.
+      - $ref: '#/components/schemas/LeadInput'
+    Lead:
+      type: object
+      description: A Workiz lead (prospective work).
+      properties:
+        UUID:
+          type: string
+        SerialId:
+          type: integer
+        LeadType:
+          type: string
+        LeadSource:
+          type: string
+        Status:
+          type: string
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        Phone:
+          type: string
+        Email:
+          type: string
+        Address:
+          type: string
+        City:
+          type: string
+        State:
+          type: string
+        PostalCode:
+          type: string
+        CreatedDate:
+          type: string
+          format: date-time
+    LeadListResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Lead'
+        has_more:
+          type: boolean
+    Error:
+      type: object
+      properties:
+        flag:
+          type: boolean
+          description: Workiz success flag; false on error.
+        code:
+          type: integer
+        data:
+          type: string
+          description: Human-readable error message.
+    LeadInput:
+      type: object
+      required:
+      - LeadType
+      properties:
+        LeadType:
+          type: string
+        LeadSource:
+          type: string
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        Phone:
+          type: string
+        Email:
+          type: string
+        Address:
+          type: string
+        City:
+          type: string
+        State:
+          type: string
+        PostalCode:
+          type: string
+        Comments:
+          type: string
+    LeadResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/Lead'
+  parameters:
+    LeadUUID:
+      name: UUID
+      in: path
+      required: true
+      description: The UUID of the lead.
+      schema:
+        type: string

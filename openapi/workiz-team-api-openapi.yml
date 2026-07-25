@@ -1,0 +1,123 @@
+openapi: 3.0.3
+info:
+  title: Workiz Jobs Team API
+  description: 'The Workiz REST API lets home-service businesses read and write their field service data - jobs, leads, team members, time off, and payments - and receive outbound webhooks for new jobs and new leads. Workiz is field service management (FSM) software covering scheduling and dispatch, CRM, estimates and invoicing, payments, and communications.
+
+
+    All calls are made to https://api.workiz.com/api/v1/ with the account API token embedded directly in the request path (https://api.workiz.com/api/v1/{api_token}/...). To obtain credentials, enable the Developer API add-on from the Workiz Feature Center / Marketplace and copy the API token (and secret) from Settings > Integrations. Responses are JSON, and HTTP status codes signal errors.
+
+
+    Endpoint coverage is marked per operation with `x-endpoint-status`: `confirmed` operations are grounded in Workiz''s public developer docs and the community PHP/Python SDKs; `modeled` operations (some Lead writes, the Payments detail, and the webhook payloads) reflect capabilities exposed through Workiz''s UI and integration partners (Make, Pipedream) whose exact request/response shapes are gated behind the authenticated developer portal and are represented here as a best-effort model.'
+  version: '1.0'
+  contact:
+    name: Workiz
+    url: https://developer.workiz.com/
+servers:
+- url: https://api.workiz.com/api/v1/{api_token}
+  description: Workiz REST API. The account API token is part of the base path.
+  variables:
+    api_token:
+      default: YOUR_API_TOKEN
+      description: The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.
+tags:
+- name: Team
+  description: Users - technicians, dispatchers, and office staff.
+paths:
+  /team/all/:
+    get:
+      operationId: listTeam
+      tags:
+      - Team
+      summary: List team members
+      description: Returns all team members (technicians, dispatchers, office users) in the account.
+      x-endpoint-status: confirmed
+      responses:
+        '200':
+          description: A list of team members.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamListResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /team/get/{USER_ID}/:
+    parameters:
+    - name: USER_ID
+      in: path
+      required: true
+      description: The user ID of the team member.
+      schema:
+        type: string
+    get:
+      operationId: getTeamMember
+      tags:
+      - Team
+      summary: Get a team member
+      description: Retrieves a single team member by user ID.
+      x-endpoint-status: confirmed
+      responses:
+        '200':
+          description: The requested team member.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMemberResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    TeamMemberResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/TeamMember'
+    TeamListResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMember'
+    TeamMember:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        active:
+          type: boolean
+    Error:
+      type: object
+      properties:
+        flag:
+          type: boolean
+          description: Workiz success flag; false on error.
+        code:
+          type: integer
+        data:
+          type: string
+          description: Human-readable error message.

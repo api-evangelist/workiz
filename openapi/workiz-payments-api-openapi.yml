@@ -1,0 +1,116 @@
+openapi: 3.0.3
+info:
+  title: Workiz Jobs Payments API
+  description: 'The Workiz REST API lets home-service businesses read and write their field service data - jobs, leads, team members, time off, and payments - and receive outbound webhooks for new jobs and new leads. Workiz is field service management (FSM) software covering scheduling and dispatch, CRM, estimates and invoicing, payments, and communications.
+
+
+    All calls are made to https://api.workiz.com/api/v1/ with the account API token embedded directly in the request path (https://api.workiz.com/api/v1/{api_token}/...). To obtain credentials, enable the Developer API add-on from the Workiz Feature Center / Marketplace and copy the API token (and secret) from Settings > Integrations. Responses are JSON, and HTTP status codes signal errors.
+
+
+    Endpoint coverage is marked per operation with `x-endpoint-status`: `confirmed` operations are grounded in Workiz''s public developer docs and the community PHP/Python SDKs; `modeled` operations (some Lead writes, the Payments detail, and the webhook payloads) reflect capabilities exposed through Workiz''s UI and integration partners (Make, Pipedream) whose exact request/response shapes are gated behind the authenticated developer portal and are represented here as a best-effort model.'
+  version: '1.0'
+  contact:
+    name: Workiz
+    url: https://developer.workiz.com/
+servers:
+- url: https://api.workiz.com/api/v1/{api_token}
+  description: Workiz REST API. The account API token is part of the base path.
+  variables:
+    api_token:
+      default: YOUR_API_TOKEN
+      description: The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.
+tags:
+- name: Payments
+  description: Payments recorded against a job.
+paths:
+  /job/addPayment/{UUID}/:
+    parameters:
+    - $ref: '#/components/parameters/JobUUID'
+    post:
+      operationId: addJobPayment
+      tags:
+      - Payments
+      summary: Add a payment to a job
+      description: Records a payment against a job by its UUID. The confirmed public operation is adding a payment; the payment body fields (amount, method, date) are modeled from Workiz's invoicing and payments behavior.
+      x-endpoint-status: confirmed
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentInput'
+      responses:
+        '200':
+          description: The recorded payment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    PaymentInput:
+      type: object
+      description: Payment recorded against a job. Modeled fields - Workiz confirms the addPayment operation; the exact body is gated behind the developer portal.
+      required:
+      - amount
+      properties:
+        amount:
+          type: number
+        paymentMethod:
+          type: string
+          description: For example cash, credit_card, check.
+        date:
+          type: string
+          format: date
+        note:
+          type: string
+    PaymentResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+        data:
+          type: object
+          properties:
+            paymentId:
+              type: string
+            jobUUID:
+              type: string
+            amount:
+              type: number
+    Error:
+      type: object
+      properties:
+        flag:
+          type: boolean
+          description: Workiz success flag; false on error.
+        code:
+          type: integer
+        data:
+          type: string
+          description: Human-readable error message.
+  responses:
+    Unauthorized:
+      description: Missing or invalid API token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    JobUUID:
+      name: UUID
+      in: path
+      required: true
+      description: The UUID of the job.
+      schema:
+        type: string
