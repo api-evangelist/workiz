@@ -11,7 +11,19 @@ description: Workiz is field service management (FSM) software for home-service
   plus outbound webhooks for new-job and new-lead events. All calls are made to
   https://api.workiz.com/api/v1/ with the account API token embedded in the request
   path.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/workiz.png
 tags:
 - Field Service Management
 - FSM
@@ -27,134 +39,94 @@ specificationVersion: '0.19'
 apis:
 - aid: workiz:workiz-jobs-api
   name: Workiz Jobs API
+  description: Work orders - the core scheduling and dispatch entity in Workiz.
+  humanURL: https://developer.workiz.com/
+  baseURL: https://api.workiz.com/api/v1
   tags:
   - Jobs
-  - Scheduling
-  - Dispatch
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developer.workiz.com/
-  baseURL: https://api.workiz.com/api/v1
   properties:
-  - url: https://developer.workiz.com/
-    type: Documentation
-  - url: https://developer.workiz.com/
-    type: APIReference
-  - url: openapi/workiz-openapi.yml
-    type: OpenAPI
-  - url: collections/workiz.postman_collection.json
-    type: PostmanCollection
-  - url: collections/workiz.opencollection.json
-    type: OpenCollection
-  description: List and retrieve jobs, create and update jobs, and assign or unassign
-    team members to a job. Jobs are the core work order in Workiz and carry the
-    client details, location, scheduled time, line items, status, and assigned crew.
-    List queries support filters such as records, offset, only_open, and status.
+  - type: OpenAPI
+    url: openapi/workiz-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://developer.workiz.com/
+  - type: APIReference
+    url: https://developer.workiz.com/
+  - type: PostmanCollection
+    url: collections/workiz.postman_collection.json
+  - type: OpenCollection
+    url: collections/workiz.opencollection.json
 - aid: workiz:workiz-leads-api
   name: Workiz Leads API
+  description: Prospective work that can be converted into jobs.
+  humanURL: https://developer.workiz.com/
+  baseURL: https://api.workiz.com/api/v1
   tags:
   - Leads
-  - CRM
-  - Sales
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developer.workiz.com/
-  baseURL: https://api.workiz.com/api/v1
   properties:
-  - url: https://developer.workiz.com/
-    type: Documentation
-  - url: openapi/workiz-openapi.yml
-    type: OpenAPI
-  - url: collections/workiz.postman_collection.json
-    type: PostmanCollection
-  - url: collections/workiz.opencollection.json
-    type: OpenCollection
-  description: List and retrieve leads and manage their lifecycle - create and update
-    leads and mark a lead as active or lost. Leads are prospective work that can be
-    converted into jobs. List and single-record reads are confirmed in the public
-    API; write and status-change operations are exposed through Workiz integration
-    partners and modeled here.
-- aid: workiz:workiz-team-api
-  name: Workiz Team API
-  tags:
-  - Team
-  - Technicians
-  - Users
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developer.workiz.com/
-  baseURL: https://api.workiz.com/api/v1
-  properties:
-  - url: https://developer.workiz.com/
-    type: Documentation
-  - url: openapi/workiz-openapi.yml
-    type: OpenAPI
-  - url: collections/workiz.postman_collection.json
-    type: PostmanCollection
-  - url: collections/workiz.opencollection.json
-    type: OpenCollection
-  description: List team members (technicians, dispatchers, and office users) and
-    retrieve a single team member by user ID. Team members are the users you assign
-    to jobs and whose availability and time off drive scheduling.
-- aid: workiz:workiz-time-off-api
-  name: Workiz Time Off API
-  tags:
-  - Time Off
-  - Availability
-  - Scheduling
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developer.workiz.com/
-  baseURL: https://api.workiz.com/api/v1
-  properties:
-  - url: https://developer.workiz.com/
-    type: Documentation
-  - url: openapi/workiz-openapi.yml
-    type: OpenAPI
-  - url: collections/workiz.postman_collection.json
-    type: PostmanCollection
-  - url: collections/workiz.opencollection.json
-    type: OpenCollection
-  description: Retrieve time-off records for the account or for a specific user by
-    name. Time off blocks a technician's availability and is a scheduling input for
-    dispatch and job assignment.
+  - type: OpenAPI
+    url: openapi/workiz-leads-api-openapi.yml
+  - type: Documentation
+    url: https://developer.workiz.com/
+  - type: APIReference
+    url: https://developer.workiz.com/
+  - type: PostmanCollection
+    url: collections/workiz.postman_collection.json
+  - type: OpenCollection
+    url: collections/workiz.opencollection.json
 - aid: workiz:workiz-payments-api
   name: Workiz Payments API
+  description: Payments recorded against a job.
+  humanURL: https://developer.workiz.com/
+  baseURL: https://api.workiz.com/api/v1
   tags:
   - Payments
-  - Invoicing
-  - Billing
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  properties:
+  - type: OpenAPI
+    url: openapi/workiz-payments-api-openapi.yml
+  - type: Documentation
+    url: https://developer.workiz.com/
+  - type: APIReference
+    url: https://developer.workiz.com/
+  - type: PostmanCollection
+    url: collections/workiz.postman_collection.json
+  - type: OpenCollection
+    url: collections/workiz.opencollection.json
+- aid: workiz:workiz-team-api
+  name: Workiz Team API
+  description: Users - technicians, dispatchers, and office staff.
   humanURL: https://developer.workiz.com/
   baseURL: https://api.workiz.com/api/v1
-  properties:
-  - url: https://developer.workiz.com/
-    type: Documentation
-  - url: openapi/workiz-openapi.yml
-    type: OpenAPI
-  - url: collections/workiz.postman_collection.json
-    type: PostmanCollection
-  - url: collections/workiz.opencollection.json
-    type: OpenCollection
-  description: Record a payment against a job by its UUID. Workiz tracks invoices,
-    estimates, and payments against jobs; the public API surfaces adding a payment
-    to a job, which advances the job toward a paid state.
-- aid: workiz:workiz-webhooks
-  name: Workiz Webhooks
   tags:
-  - Webhooks
-  - Events
-  - Notifications
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  - Team
+  properties:
+  - type: OpenAPI
+    url: openapi/workiz-team-api-openapi.yml
+  - type: Documentation
+    url: https://developer.workiz.com/
+  - type: APIReference
+    url: https://developer.workiz.com/
+  - type: PostmanCollection
+    url: collections/workiz.postman_collection.json
+  - type: OpenCollection
+    url: collections/workiz.opencollection.json
+- aid: workiz:workiz-time-off-api
+  name: Workiz Time Off API
+  description: Technician time-off records that affect availability.
   humanURL: https://developer.workiz.com/
   baseURL: https://api.workiz.com/api/v1
+  tags:
+  - Time Off
   properties:
-  - url: https://developer.workiz.com/
-    type: Documentation
-  - url: openapi/workiz-openapi.yml
-    type: OpenAPI
-  description: Outbound webhooks that push events to a configured HTTPS endpoint when
-    a new job is created or a new lead arrives, enabling near-real-time integrations
-    without polling. Workiz posts the event payload to your URL. This is server-to-endpoint
-    HTTP delivery, not a WebSocket. Webhook subscription is offered through the
-    Developer API add-on and Workiz integration partners; the endpoint payloads are
-    modeled here.
+  - type: OpenAPI
+    url: openapi/workiz-time-off-api-openapi.yml
+  - type: Documentation
+    url: https://developer.workiz.com/
+  - type: APIReference
+    url: https://developer.workiz.com/
+  - type: PostmanCollection
+    url: collections/workiz.postman_collection.json
+  - type: OpenCollection
+    url: collections/workiz.opencollection.json
 common:
 - type: AgenticAccess
   url: agentic-access/workiz-agentic-access.yml
