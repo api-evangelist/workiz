@@ -1,0 +1,22 @@
+{
+  "provider": "workiz",
+  "sources": [
+    "workiz-jobs-api-openapi.yml",
+    "workiz-leads-api-openapi.yml",
+    "workiz-payments-api-openapi.yml",
+    "workiz-team-api-openapi.yml",
+    "workiz-time-off-api-openapi.yml"
+  ],
+  "outputs": [
+    "workiz-jobs-api-openapi.yml",
+    "workiz-leads-api-openapi.yml",
+    "workiz-payments-api-openapi.yml",
+    "workiz-team-api-openapi.yml",
+    "workiz-time-off-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
