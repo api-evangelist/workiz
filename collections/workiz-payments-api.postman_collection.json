@@ -1,0 +1,286 @@
+{
+  "item": [
+    {
+      "id": "c82cf6bb-2b46-40a0-bf4d-82a9ceac9184",
+      "name": "Payments",
+      "description": {
+        "content": "Payments recorded against a job.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9b6d6933-2db6-477e-b698-a2a09d167a2f",
+          "name": "Add a payment to a job",
+          "request": {
+            "name": "Add a payment to a job",
+            "description": {
+              "content": "Records a payment against a job by its UUID. The confirmed public operation is adding a payment; the payment body fields (amount, method, date) are modeled from Workiz's invoicing and payments behavior.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "job",
+                "addPayment",
+                ":UUID",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "UUID",
+                  "description": "(Required) The UUID of the job."
+                },
+                {
+                  "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                  "type": "any",
+                  "value": "{{api_token}}",
+                  "key": "api_token"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<number>\",\n  \"paymentMethod\": \"<string>\",\n  \"date\": \"<date>\",\n  \"note\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6728c765-6cca-4d84-9acb-5fbac074085f",
+              "name": "The recorded payment.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "job",
+                    "addPayment",
+                    ":UUID",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "UUID",
+                      "description": "(Required) The UUID of the job."
+                    },
+                    {
+                      "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                      "type": "any",
+                      "value": "{{api_token}}",
+                      "key": "api_token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<number>\",\n  \"paymentMethod\": \"<string>\",\n  \"date\": \"<date>\",\n  \"note\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"flag\": true,\n  \"data\": {\n    \"paymentId\": \"string\",\n    \"jobUUID\": \"string\",\n    \"amount\": 1072.4608474462916\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6e681be3-953d-430d-88e3-27e9734e8948",
+              "name": "Missing or invalid API token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "job",
+                    "addPayment",
+                    ":UUID",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "UUID",
+                      "description": "(Required) The UUID of the job."
+                    },
+                    {
+                      "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                      "type": "any",
+                      "value": "{{api_token}}",
+                      "key": "api_token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<number>\",\n  \"paymentMethod\": \"<string>\",\n  \"date\": \"<date>\",\n  \"note\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"flag\": true,\n  \"code\": 8156,\n  \"data\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f9e4cd9-583c-4a41-a95f-1bc6f617e749",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "job",
+                    "addPayment",
+                    ":UUID",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "UUID",
+                      "description": "(Required) The UUID of the job."
+                    },
+                    {
+                      "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                      "type": "any",
+                      "value": "{{api_token}}",
+                      "key": "api_token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<number>\",\n  \"paymentMethod\": \"<string>\",\n  \"date\": \"<date>\",\n  \"note\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"flag\": true,\n  \"code\": 8156,\n  \"data\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "YOUR_API_TOKEN",
+      "key": "api_token"
+    },
+    {
+      "type": "string",
+      "value": "https://api.workiz.com/api/v1/{{api_token}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c4438a80-1cd4-4cd8-9a11-ac5809a1a96c",
+    "name": "Workiz Jobs Payments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Workiz REST API lets home-service businesses read and write their field service data - jobs, leads, team members, time off, and payments - and receive outbound webhooks for new jobs and new leads. Workiz is field service management (FSM) software covering scheduling and dispatch, CRM, estimates and invoicing, payments, and communications.\n\nAll calls are made to https://api.workiz.com/api/v1/ with the account API token embedded directly in the request path (https://api.workiz.com/api/v1/{api_token}/...). To obtain credentials, enable the Developer API add-on from the Workiz Feature Center / Marketplace and copy the API token (and secret) from Settings > Integrations. Responses are JSON, and HTTP status codes signal errors.\n\nEndpoint coverage is marked per operation with `x-endpoint-status`: `confirmed` operations are grounded in Workiz's public developer docs and the community PHP/Python SDKs; `modeled` operations (some Lead writes, the Payments detail, and the webhook payloads) reflect capabilities exposed through Workiz's UI and integration partners (Make, Pipedream) whose exact request/response shapes are gated behind the authenticated developer portal and are represented here as a best-effort model.\n\nContact Support:\n Name: Workiz",
+      "type": "text/plain"
+    }
+  }
+}

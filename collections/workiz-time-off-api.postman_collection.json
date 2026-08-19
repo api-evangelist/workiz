@@ -1,0 +1,381 @@
+{
+  "item": [
+    {
+      "id": "959616fb-f9b1-4916-9f1e-81314dbc6b17",
+      "name": "Time Off",
+      "description": {
+        "content": "Technician time-off records that affect availability.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "39a74048-224f-4650-b00c-aaf9002300b8",
+          "name": "List time off",
+          "request": {
+            "name": "List time off",
+            "description": {
+              "content": "Returns time-off records for the account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "timeoff",
+                "get",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                  "type": "any",
+                  "value": "{{api_token}}",
+                  "key": "api_token"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2a51e456-a6a1-43e3-9fe1-60b017e34e5e",
+              "name": "A list of time-off records.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "timeoff",
+                    "get",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                      "type": "any",
+                      "value": "{{api_token}}",
+                      "key": "api_token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"flag\": false,\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"user\": \"string\",\n      \"startDate\": \"1973-11-12T02:48:30.524Z\",\n      \"endDate\": \"1967-04-20T05:53:19.804Z\",\n      \"reason\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"user\": \"string\",\n      \"startDate\": \"2024-03-02T00:12:46.657Z\",\n      \"endDate\": \"2017-06-11T12:05:25.049Z\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45804150-7664-41d3-8782-f21a5a9902f9",
+              "name": "Missing or invalid API token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "timeoff",
+                    "get",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                      "type": "any",
+                      "value": "{{api_token}}",
+                      "key": "api_token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"flag\": true,\n  \"code\": 558,\n  \"data\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a6b3f832-11a1-40d2-ba42-2e11757dd572",
+          "name": "Get time off for a user",
+          "request": {
+            "name": "Get time off for a user",
+            "description": {
+              "content": "Returns the time-off records for a specific user by name.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "timeoff",
+                "get",
+                ":USER_NAME",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "USER_NAME",
+                  "description": "(Required) The user name whose time off to retrieve."
+                },
+                {
+                  "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                  "type": "any",
+                  "value": "{{api_token}}",
+                  "key": "api_token"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cd9b0097-265e-4949-88b3-be954e1d7e32",
+              "name": "The user's time-off records.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "timeoff",
+                    "get",
+                    ":USER_NAME",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "USER_NAME",
+                      "description": "(Required) The user name whose time off to retrieve."
+                    },
+                    {
+                      "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                      "type": "any",
+                      "value": "{{api_token}}",
+                      "key": "api_token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"flag\": true,\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"user\": \"string\",\n      \"startDate\": \"2004-02-03T02:22:13.308Z\",\n      \"endDate\": \"2003-01-27T03:17:46.913Z\",\n      \"reason\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"user\": \"string\",\n      \"startDate\": \"2013-12-23T23:23:07.680Z\",\n      \"endDate\": \"2023-05-09T22:07:50.930Z\",\n      \"reason\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9752188-6447-4cc0-a6d1-3d0daa4fa195",
+              "name": "Missing or invalid API token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "timeoff",
+                    "get",
+                    ":USER_NAME",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "USER_NAME",
+                      "description": "(Required) The user name whose time off to retrieve."
+                    },
+                    {
+                      "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                      "type": "any",
+                      "value": "{{api_token}}",
+                      "key": "api_token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"flag\": true,\n  \"code\": 558,\n  \"data\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1b05334-3409-4b10-b3fc-e12aa7a564e2",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "timeoff",
+                    "get",
+                    ":USER_NAME",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "USER_NAME",
+                      "description": "(Required) The user name whose time off to retrieve."
+                    },
+                    {
+                      "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                      "type": "any",
+                      "value": "{{api_token}}",
+                      "key": "api_token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"flag\": true,\n  \"code\": 558,\n  \"data\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "YOUR_API_TOKEN",
+      "key": "api_token"
+    },
+    {
+      "type": "string",
+      "value": "https://api.workiz.com/api/v1/{{api_token}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1f67b865-8604-4ec3-92e7-597d88be5125",
+    "name": "Workiz Jobs Time Off API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Workiz REST API lets home-service businesses read and write their field service data - jobs, leads, team members, time off, and payments - and receive outbound webhooks for new jobs and new leads. Workiz is field service management (FSM) software covering scheduling and dispatch, CRM, estimates and invoicing, payments, and communications.\n\nAll calls are made to https://api.workiz.com/api/v1/ with the account API token embedded directly in the request path (https://api.workiz.com/api/v1/{api_token}/...). To obtain credentials, enable the Developer API add-on from the Workiz Feature Center / Marketplace and copy the API token (and secret) from Settings > Integrations. Responses are JSON, and HTTP status codes signal errors.\n\nEndpoint coverage is marked per operation with `x-endpoint-status`: `confirmed` operations are grounded in Workiz's public developer docs and the community PHP/Python SDKs; `modeled` operations (some Lead writes, the Payments detail, and the webhook payloads) reflect capabilities exposed through Workiz's UI and integration partners (Make, Pipedream) whose exact request/response shapes are gated behind the authenticated developer portal and are represented here as a best-effort model.\n\nContact Support:\n Name: Workiz",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Workiz Jobs Leads API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Leads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List leads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.workiz.com/api/v1/{api_token}/lead/all/",
+            "params": [
+              {
+                "name": "records",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to skip for pagination."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of leads. Supports offset-based pagination."
+        },
+        {
+          "info": {
+            "name": "Get a lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.workiz.com/api/v1/{api_token}/lead/get/:UUID/",
+            "params": [
+              {
+                "name": "UUID",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the lead."
+              }
+            ]
+          },
+          "docs": "Retrieves a single lead by its UUID."
+        },
+        {
+          "info": {
+            "name": "Create a lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.workiz.com/api/v1/{api_token}/lead/create/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new lead. Exposed through Workiz integration partners; request shape modeled here."
+        },
+        {
+          "info": {
+            "name": "Update a lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.workiz.com/api/v1/{api_token}/lead/update/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing lead. Exposed through Workiz integration partners; request shape modeled here."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

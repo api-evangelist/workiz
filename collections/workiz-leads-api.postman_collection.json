@@ -1,0 +1,786 @@
+{
+  "item": [
+    {
+      "id": "231a1852-6176-42ed-b88b-611973a7f8e1",
+      "name": "Leads",
+      "description": {
+        "content": "Prospective work that can be converted into jobs.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6131a872-9454-4785-9a43-b3ad52f9ad25",
+          "name": "List leads",
+          "request": {
+            "name": "List leads",
+            "description": {
+              "content": "Returns a paginated list of leads. Supports offset-based pagination.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "lead",
+                "all",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "records",
+                  "value": "100",
+                  "description": "Number of records to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Number of records to skip for pagination."
+                }
+              ],
+              "variable": [
+                {
+                  "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                  "type": "any",
+                  "value": "{{api_token}}",
+                  "key": "api_token"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "569e9bc9-66af-4f5f-8dc4-9b58920a0fb7",
+              "name": "A list of leads.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "lead",
+                    "all",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "records",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                      "type": "any",
+                      "value": "{{api_token}}",
+                      "key": "api_token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"flag\": false,\n  \"data\": [\n    {\n      \"UUID\": \"string\",\n      \"SerialId\": 2855,\n      \"LeadType\": \"string\",\n      \"LeadSource\": \"string\",\n      \"Status\": \"string\",\n      \"FirstName\": \"string\",\n      \"LastName\": \"string\",\n      \"Phone\": \"string\",\n      \"Email\": \"string\",\n      \"Address\": \"string\",\n      \"City\": \"string\",\n      \"State\": \"string\",\n      \"PostalCode\": \"string\",\n      \"CreatedDate\": \"1967-09-05T12:31:05.479Z\"\n    },\n    {\n      \"UUID\": \"string\",\n      \"SerialId\": 4033,\n      \"LeadType\": \"string\",\n      \"LeadSource\": \"string\",\n      \"Status\": \"string\",\n      \"FirstName\": \"string\",\n      \"LastName\": \"string\",\n      \"Phone\": \"string\",\n      \"Email\": \"string\",\n      \"Address\": \"string\",\n      \"City\": \"string\",\n      \"State\": \"string\",\n      \"PostalCode\": \"string\",\n      \"CreatedDate\": \"1954-06-20T19:14:54.954Z\"\n    }\n  ],\n  \"has_more\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e77a09b-b9c9-44de-819d-c99e751c4891",
+              "name": "Missing or invalid API token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "lead",
+                    "all",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "records",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                      "type": "any",
+                      "value": "{{api_token}}",
+                      "key": "api_token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"flag\": true,\n  \"code\": 9830,\n  \"data\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2a4e967c-8eeb-4735-9201-757b36dfb847",
+          "name": "Get a lead",
+          "request": {
+            "name": "Get a lead",
+            "description": {
+              "content": "Retrieves a single lead by its UUID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "lead",
+                "get",
+                ":UUID",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "UUID",
+                  "description": "(Required) The UUID of the lead."
+                },
+                {
+                  "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                  "type": "any",
+                  "value": "{{api_token}}",
+                  "key": "api_token"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "05907300-b230-44e3-9719-96795102e621",
+              "name": "The requested lead.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "lead",
+                    "get",
+                    ":UUID",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "UUID",
+                      "description": "(Required) The UUID of the lead."
+                    },
+                    {
+                      "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                      "type": "any",
+                      "value": "{{api_token}}",
+                      "key": "api_token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"flag\": false,\n  \"data\": {\n    \"UUID\": \"string\",\n    \"SerialId\": 581,\n    \"LeadType\": \"string\",\n    \"LeadSource\": \"string\",\n    \"Status\": \"string\",\n    \"FirstName\": \"string\",\n    \"LastName\": \"string\",\n    \"Phone\": \"string\",\n    \"Email\": \"string\",\n    \"Address\": \"string\",\n    \"City\": \"string\",\n    \"State\": \"string\",\n    \"PostalCode\": \"string\",\n    \"CreatedDate\": \"1959-03-21T05:22:13.919Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29d2a916-66d8-4bee-9ab0-482f9b65c5bb",
+              "name": "Missing or invalid API token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "lead",
+                    "get",
+                    ":UUID",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "UUID",
+                      "description": "(Required) The UUID of the lead."
+                    },
+                    {
+                      "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                      "type": "any",
+                      "value": "{{api_token}}",
+                      "key": "api_token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"flag\": true,\n  \"code\": 9830,\n  \"data\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc7259d3-c769-4e89-b347-b57e608e2811",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "lead",
+                    "get",
+                    ":UUID",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "UUID",
+                      "description": "(Required) The UUID of the lead."
+                    },
+                    {
+                      "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                      "type": "any",
+                      "value": "{{api_token}}",
+                      "key": "api_token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"flag\": true,\n  \"code\": 9830,\n  \"data\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "28fbb493-5222-4a6f-a7e6-65a595dc2215",
+          "name": "Create a lead",
+          "request": {
+            "name": "Create a lead",
+            "description": {
+              "content": "Creates a new lead. Exposed through Workiz integration partners; request shape modeled here.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "lead",
+                "create",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                  "type": "any",
+                  "value": "{{api_token}}",
+                  "key": "api_token"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"LeadType\": \"<string>\",\n  \"LeadSource\": \"<string>\",\n  \"FirstName\": \"<string>\",\n  \"LastName\": \"<string>\",\n  \"Phone\": \"<string>\",\n  \"Email\": \"<string>\",\n  \"Address\": \"<string>\",\n  \"City\": \"<string>\",\n  \"State\": \"<string>\",\n  \"PostalCode\": \"<string>\",\n  \"Comments\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "70041419-ba1d-4d3a-8458-de26c0faf600",
+              "name": "The created lead.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "lead",
+                    "create",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                      "type": "any",
+                      "value": "{{api_token}}",
+                      "key": "api_token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"LeadType\": \"<string>\",\n  \"LeadSource\": \"<string>\",\n  \"FirstName\": \"<string>\",\n  \"LastName\": \"<string>\",\n  \"Phone\": \"<string>\",\n  \"Email\": \"<string>\",\n  \"Address\": \"<string>\",\n  \"City\": \"<string>\",\n  \"State\": \"<string>\",\n  \"PostalCode\": \"<string>\",\n  \"Comments\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"flag\": false,\n  \"data\": {\n    \"UUID\": \"string\",\n    \"SerialId\": 581,\n    \"LeadType\": \"string\",\n    \"LeadSource\": \"string\",\n    \"Status\": \"string\",\n    \"FirstName\": \"string\",\n    \"LastName\": \"string\",\n    \"Phone\": \"string\",\n    \"Email\": \"string\",\n    \"Address\": \"string\",\n    \"City\": \"string\",\n    \"State\": \"string\",\n    \"PostalCode\": \"string\",\n    \"CreatedDate\": \"1959-03-21T05:22:13.919Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d38d8306-172b-499a-8166-14bcda3b35c5",
+              "name": "Missing or invalid API token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "lead",
+                    "create",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                      "type": "any",
+                      "value": "{{api_token}}",
+                      "key": "api_token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"LeadType\": \"<string>\",\n  \"LeadSource\": \"<string>\",\n  \"FirstName\": \"<string>\",\n  \"LastName\": \"<string>\",\n  \"Phone\": \"<string>\",\n  \"Email\": \"<string>\",\n  \"Address\": \"<string>\",\n  \"City\": \"<string>\",\n  \"State\": \"<string>\",\n  \"PostalCode\": \"<string>\",\n  \"Comments\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"flag\": true,\n  \"code\": 9830,\n  \"data\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2e673228-9ba5-4571-9d76-6364edcac875",
+          "name": "Update a lead",
+          "request": {
+            "name": "Update a lead",
+            "description": {
+              "content": "Updates an existing lead. Exposed through Workiz integration partners; request shape modeled here.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "lead",
+                "update",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                  "type": "any",
+                  "value": "{{api_token}}",
+                  "key": "api_token"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"LeadType\": \"<string>\",\n  \"UUID\": \"<string>\",\n  \"Status\": \"<string>\",\n  \"LeadSource\": \"<string>\",\n  \"FirstName\": \"<string>\",\n  \"LastName\": \"<string>\",\n  \"Phone\": \"<string>\",\n  \"Email\": \"<string>\",\n  \"Address\": \"<string>\",\n  \"City\": \"<string>\",\n  \"State\": \"<string>\",\n  \"PostalCode\": \"<string>\",\n  \"Comments\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8e2dabbc-8230-4634-9b5e-f29473ed76e1",
+              "name": "The updated lead.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "lead",
+                    "update",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                      "type": "any",
+                      "value": "{{api_token}}",
+                      "key": "api_token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"LeadType\": \"<string>\",\n  \"UUID\": \"<string>\",\n  \"Status\": \"<string>\",\n  \"LeadSource\": \"<string>\",\n  \"FirstName\": \"<string>\",\n  \"LastName\": \"<string>\",\n  \"Phone\": \"<string>\",\n  \"Email\": \"<string>\",\n  \"Address\": \"<string>\",\n  \"City\": \"<string>\",\n  \"State\": \"<string>\",\n  \"PostalCode\": \"<string>\",\n  \"Comments\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"flag\": false,\n  \"data\": {\n    \"UUID\": \"string\",\n    \"SerialId\": 581,\n    \"LeadType\": \"string\",\n    \"LeadSource\": \"string\",\n    \"Status\": \"string\",\n    \"FirstName\": \"string\",\n    \"LastName\": \"string\",\n    \"Phone\": \"string\",\n    \"Email\": \"string\",\n    \"Address\": \"string\",\n    \"City\": \"string\",\n    \"State\": \"string\",\n    \"PostalCode\": \"string\",\n    \"CreatedDate\": \"1959-03-21T05:22:13.919Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "910ce24e-7b74-4ddc-8189-eb3558399be1",
+              "name": "Missing or invalid API token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "lead",
+                    "update",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                      "type": "any",
+                      "value": "{{api_token}}",
+                      "key": "api_token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"LeadType\": \"<string>\",\n  \"UUID\": \"<string>\",\n  \"Status\": \"<string>\",\n  \"LeadSource\": \"<string>\",\n  \"FirstName\": \"<string>\",\n  \"LastName\": \"<string>\",\n  \"Phone\": \"<string>\",\n  \"Email\": \"<string>\",\n  \"Address\": \"<string>\",\n  \"City\": \"<string>\",\n  \"State\": \"<string>\",\n  \"PostalCode\": \"<string>\",\n  \"Comments\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"flag\": true,\n  \"code\": 9830,\n  \"data\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b5ef4cd2-88a6-4739-98a1-513baf6c6ba1",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "lead",
+                    "update",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+                      "type": "any",
+                      "value": "{{api_token}}",
+                      "key": "api_token"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"LeadType\": \"<string>\",\n  \"UUID\": \"<string>\",\n  \"Status\": \"<string>\",\n  \"LeadSource\": \"<string>\",\n  \"FirstName\": \"<string>\",\n  \"LastName\": \"<string>\",\n  \"Phone\": \"<string>\",\n  \"Email\": \"<string>\",\n  \"Address\": \"<string>\",\n  \"City\": \"<string>\",\n  \"State\": \"<string>\",\n  \"PostalCode\": \"<string>\",\n  \"Comments\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"flag\": true,\n  \"code\": 9830,\n  \"data\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The account API token from the Workiz Developer API add-on (Settings > Integrations). It is placed directly in the URL path; there is no Authorization header. A paired API secret is issued for signed requests where required.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "YOUR_API_TOKEN",
+      "key": "api_token"
+    },
+    {
+      "type": "string",
+      "value": "https://api.workiz.com/api/v1/{{api_token}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b63aa221-4181-45e1-9d1d-94fea0e316ae",
+    "name": "Workiz Jobs Leads API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Workiz REST API lets home-service businesses read and write their field service data - jobs, leads, team members, time off, and payments - and receive outbound webhooks for new jobs and new leads. Workiz is field service management (FSM) software covering scheduling and dispatch, CRM, estimates and invoicing, payments, and communications.\n\nAll calls are made to https://api.workiz.com/api/v1/ with the account API token embedded directly in the request path (https://api.workiz.com/api/v1/{api_token}/...). To obtain credentials, enable the Developer API add-on from the Workiz Feature Center / Marketplace and copy the API token (and secret) from Settings > Integrations. Responses are JSON, and HTTP status codes signal errors.\n\nEndpoint coverage is marked per operation with `x-endpoint-status`: `confirmed` operations are grounded in Workiz's public developer docs and the community PHP/Python SDKs; `modeled` operations (some Lead writes, the Payments detail, and the webhook payloads) reflect capabilities exposed through Workiz's UI and integration partners (Make, Pipedream) whose exact request/response shapes are gated behind the authenticated developer portal and are represented here as a best-effort model.\n\nContact Support:\n Name: Workiz",
+      "type": "text/plain"
+    }
+  }
+}

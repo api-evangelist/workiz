@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Workiz Jobs Payments API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add a payment to a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.workiz.com/api/v1/{api_token}/job/addPayment/:UUID/",
+            "params": [
+              {
+                "name": "UUID",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the job."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Records a payment against a job by its UUID. The confirmed public operation is adding a payment; the payment body fields (amount, method, date) are modeled from Workiz's invoicing and payments behavior."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

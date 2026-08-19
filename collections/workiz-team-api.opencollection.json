@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Workiz Jobs Team API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Team",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List team members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.workiz.com/api/v1/{api_token}/team/all/"
+          },
+          "docs": "Returns all team members (technicians, dispatchers, office users) in the account."
+        },
+        {
+          "info": {
+            "name": "Get a team member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.workiz.com/api/v1/{api_token}/team/get/:USER_ID/",
+            "params": [
+              {
+                "name": "USER_ID",
+                "value": "",
+                "type": "path",
+                "description": "The user ID of the team member."
+              }
+            ]
+          },
+          "docs": "Retrieves a single team member by user ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

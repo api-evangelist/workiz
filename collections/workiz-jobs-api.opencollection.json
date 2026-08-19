@@ -1,0 +1,140 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Workiz Jobs API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.workiz.com/api/v1/{api_token}/job/all/",
+            "params": [
+              {
+                "name": "records",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to skip for pagination."
+              },
+              {
+                "name": "only_open",
+                "value": "",
+                "type": "query",
+                "description": "When true, return only open (not closed/cancelled) jobs."
+              },
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs on or after this date (YYYY-MM-DD)."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by status label (for example Scheduled, In Progress, Done)."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of jobs. Supports filtering by open state and status, and offset-based pagination."
+        },
+        {
+          "info": {
+            "name": "Get a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.workiz.com/api/v1/{api_token}/job/get/:UUID/",
+            "params": [
+              {
+                "name": "UUID",
+                "value": "",
+                "type": "path",
+                "description": "The UUID of the job."
+              }
+            ]
+          },
+          "docs": "Retrieves a single job by its UUID."
+        },
+        {
+          "info": {
+            "name": "Create a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.workiz.com/api/v1/{api_token}/job/create/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new job (work order) in the account."
+        },
+        {
+          "info": {
+            "name": "Update a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.workiz.com/api/v1/{api_token}/job/update/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing job. The job UUID is supplied in the request body."
+        },
+        {
+          "info": {
+            "name": "Assign a user to a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.workiz.com/api/v1/{api_token}/job/assign/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assigns a team member to an existing job."
+        },
+        {
+          "info": {
+            "name": "Unassign a user from a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.workiz.com/api/v1/{api_token}/job/unassign/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Removes a team member from an existing job."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
