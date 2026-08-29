@@ -11,6 +11,18 @@ description: Workiz is field service management (FSM) software for home-service
   plus outbound webhooks for new-job and new-lead events. All calls are made to
   https://api.workiz.com/api/v1/ with the account API token embedded in the request
   path.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: unknown
