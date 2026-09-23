@@ -1,13 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Workiz Jobs Leads API
-  description: 'The Workiz REST API lets home-service businesses read and write their field service data - jobs, leads, team members, time off, and payments - and receive outbound webhooks for new jobs and new leads. Workiz is field service management (FSM) software covering scheduling and dispatch, CRM, estimates and invoicing, payments, and communications.
-
-
-    All calls are made to https://api.workiz.com/api/v1/ with the account API token embedded directly in the request path (https://api.workiz.com/api/v1/{api_token}/...). To obtain credentials, enable the Developer API add-on from the Workiz Feature Center / Marketplace and copy the API token (and secret) from Settings > Integrations. Responses are JSON, and HTTP status codes signal errors.
-
-
-    Endpoint coverage is marked per operation with `x-endpoint-status`: `confirmed` operations are grounded in Workiz''s public developer docs and the community PHP/Python SDKs; `modeled` operations (some Lead writes, the Payments detail, and the webhook payloads) reflect capabilities exposed through Workiz''s UI and integration partners (Make, Pipedream) whose exact request/response shapes are gated behind the authenticated developer portal and are represented here as a best-effort model.'
+  title: Workiz Leads API
+  description: The Workiz REST API lets home-service businesses read and write their field service data - jobs, leads, team members, time off, and payments - and receive outbound webhooks for new jobs and new leads.
   version: '1.0'
   contact:
     name: Workiz
@@ -125,35 +119,18 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid API token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    LeadUpdateInput:
-      allOf:
-      - type: object
-        required:
-        - UUID
-        properties:
-          UUID:
-            type: string
-          Status:
-            type: string
-            enum:
-            - active
-            - lost
-            description: Mark the lead active or lost.
-      - $ref: '#/components/schemas/LeadInput'
+    Error:
+      type: object
+      properties:
+        flag:
+          type: boolean
+          description: Workiz success flag; false on error.
+        code:
+          type: integer
+        data:
+          type: string
+          description: Human-readable error message.
     Lead:
       type: object
       description: A Workiz lead (prospective work).
@@ -198,17 +175,21 @@ components:
             $ref: '#/components/schemas/Lead'
         has_more:
           type: boolean
-    Error:
-      type: object
-      properties:
-        flag:
-          type: boolean
-          description: Workiz success flag; false on error.
-        code:
-          type: integer
-        data:
-          type: string
-          description: Human-readable error message.
+    LeadUpdateInput:
+      allOf:
+      - type: object
+        required:
+        - UUID
+        properties:
+          UUID:
+            type: string
+          Status:
+            type: string
+            enum:
+            - active
+            - lost
+            description: Mark the lead active or lost.
+      - $ref: '#/components/schemas/LeadInput'
     LeadInput:
       type: object
       required:
@@ -243,6 +224,19 @@ components:
           type: boolean
         data:
           $ref: '#/components/schemas/Lead'
+  responses:
+    Unauthorized:
+      description: Missing or invalid API token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     LeadUUID:
       name: UUID

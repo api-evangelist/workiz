@@ -1,11 +1,7 @@
 {
   "provider": "workiz",
   "sources": [
-    "workiz-jobs-api-openapi.yml",
-    "workiz-leads-api-openapi.yml",
-    "workiz-payments-api-openapi.yml",
-    "workiz-team-api-openapi.yml",
-    "workiz-time-off-api-openapi.yml"
+    "_original/workiz-openapi.yml"
   ],
   "outputs": [
     "workiz-jobs-api-openapi.yml",
@@ -17,6 +13,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "workiz-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "workiz-jobs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "workiz-leads-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "workiz-payments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "workiz-team-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "workiz-time-off-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

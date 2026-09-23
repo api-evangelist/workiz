@@ -1,13 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Workiz Jobs API
-  description: 'The Workiz REST API lets home-service businesses read and write their field service data - jobs, leads, team members, time off, and payments - and receive outbound webhooks for new jobs and new leads. Workiz is field service management (FSM) software covering scheduling and dispatch, CRM, estimates and invoicing, payments, and communications.
-
-
-    All calls are made to https://api.workiz.com/api/v1/ with the account API token embedded directly in the request path (https://api.workiz.com/api/v1/{api_token}/...). To obtain credentials, enable the Developer API add-on from the Workiz Feature Center / Marketplace and copy the API token (and secret) from Settings > Integrations. Responses are JSON, and HTTP status codes signal errors.
-
-
-    Endpoint coverage is marked per operation with `x-endpoint-status`: `confirmed` operations are grounded in Workiz''s public developer docs and the community PHP/Python SDKs; `modeled` operations (some Lead writes, the Payments detail, and the webhook payloads) reflect capabilities exposed through Workiz''s UI and integration partners (Make, Pipedream) whose exact request/response shapes are gated behind the authenticated developer portal and are represented here as a best-effort model.'
+  description: The Workiz REST API lets home-service businesses read and write their field service data - jobs, leads, team members, time off, and payments - and receive outbound webhooks for new jobs and new leads.
   version: '1.0'
   contact:
     name: Workiz
@@ -191,6 +185,24 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    JobResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/Job'
+    Error:
+      type: object
+      properties:
+        flag:
+          type: boolean
+          description: Workiz success flag; false on error.
+        code:
+          type: integer
+        data:
+          type: string
+          description: Human-readable error message.
     LineItem:
       type: object
       properties:
@@ -202,22 +214,6 @@ components:
           type: number
         taxable:
           type: boolean
-    JobResponse:
-      type: object
-      properties:
-        flag:
-          type: boolean
-        data:
-          $ref: '#/components/schemas/Job'
-    JobUpdateInput:
-      allOf:
-      - type: object
-        required:
-        - UUID
-        properties:
-          UUID:
-            type: string
-      - $ref: '#/components/schemas/JobInput'
     JobListResponse:
       type: object
       properties:
@@ -229,6 +225,36 @@ components:
             $ref: '#/components/schemas/Job'
         has_more:
           type: boolean
+    GenericResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+          description: Success flag.
+        data:
+          type: object
+          additionalProperties: true
+    JobUpdateInput:
+      allOf:
+      - type: object
+        required:
+        - UUID
+        properties:
+          UUID:
+            type: string
+      - $ref: '#/components/schemas/JobInput'
+    JobAssignmentInput:
+      type: object
+      required:
+      - UUID
+      - User
+      properties:
+        UUID:
+          type: string
+          description: The UUID of the job.
+        User:
+          type: string
+          description: The user (team member) to assign or unassign.
     Job:
       type: object
       description: A Workiz job (work order).
@@ -287,18 +313,6 @@ components:
         CreatedDate:
           type: string
           format: date-time
-    JobAssignmentInput:
-      type: object
-      required:
-      - UUID
-      - User
-      properties:
-        UUID:
-          type: string
-          description: The UUID of the job.
-        User:
-          type: string
-          description: The user (team member) to assign or unassign.
     JobInput:
       type: object
       required:
@@ -337,26 +351,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LineItem'
-    Error:
-      type: object
-      properties:
-        flag:
-          type: boolean
-          description: Workiz success flag; false on error.
-        code:
-          type: integer
-        data:
-          type: string
-          description: Human-readable error message.
-    GenericResponse:
-      type: object
-      properties:
-        flag:
-          type: boolean
-          description: Success flag.
-        data:
-          type: object
-          additionalProperties: true
   responses:
     Unauthorized:
       description: Missing or invalid API token.
