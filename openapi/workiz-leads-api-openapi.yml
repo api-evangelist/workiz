@@ -119,18 +119,15 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    LeadUUID:
+      name: UUID
+      in: path
+      required: true
+      description: The UUID of the lead.
+      schema:
+        type: string
   schemas:
-    Error:
-      type: object
-      properties:
-        flag:
-          type: boolean
-          description: Workiz success flag; false on error.
-        code:
-          type: integer
-        data:
-          type: string
-          description: Human-readable error message.
     Lead:
       type: object
       description: A Workiz lead (prospective work).
@@ -164,17 +161,17 @@ components:
         CreatedDate:
           type: string
           format: date-time
-    LeadListResponse:
+    Error:
       type: object
       properties:
         flag:
           type: boolean
+          description: Workiz success flag; false on error.
+        code:
+          type: integer
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Lead'
-        has_more:
-          type: boolean
+          type: string
+          description: Human-readable error message.
     LeadUpdateInput:
       allOf:
       - type: object
@@ -190,6 +187,24 @@ components:
             - lost
             description: Mark the lead active or lost.
       - $ref: '#/components/schemas/LeadInput'
+    LeadListResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Lead'
+        has_more:
+          type: boolean
+    LeadResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/Lead'
     LeadInput:
       type: object
       required:
@@ -217,31 +232,16 @@ components:
           type: string
         Comments:
           type: string
-    LeadResponse:
-      type: object
-      properties:
-        flag:
-          type: boolean
-        data:
-          $ref: '#/components/schemas/Lead'
   responses:
-    Unauthorized:
-      description: Missing or invalid API token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     NotFound:
       description: The requested resource was not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    LeadUUID:
-      name: UUID
-      in: path
-      required: true
-      description: The UUID of the lead.
-      schema:
-        type: string
+    Unauthorized:
+      description: Missing or invalid API token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

@@ -185,35 +185,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    JobResponse:
-      type: object
-      properties:
-        flag:
-          type: boolean
-        data:
-          $ref: '#/components/schemas/Job'
-    Error:
-      type: object
-      properties:
-        flag:
-          type: boolean
-          description: Workiz success flag; false on error.
-        code:
-          type: integer
-        data:
-          type: string
-          description: Human-readable error message.
-    LineItem:
-      type: object
-      properties:
-        name:
-          type: string
-        quantity:
-          type: number
-        unitPrice:
-          type: number
-        taxable:
-          type: boolean
     JobListResponse:
       type: object
       properties:
@@ -225,36 +196,55 @@ components:
             $ref: '#/components/schemas/Job'
         has_more:
           type: boolean
-    GenericResponse:
+    JobInput:
+      type: object
+      required:
+      - JobType
+      - JobDateTime
+      properties:
+        JobType:
+          type: string
+        JobSource:
+          type: string
+        JobDateTime:
+          type: string
+          format: date-time
+        JobEndDateTime:
+          type: string
+          format: date-time
+        Comments:
+          type: string
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        Phone:
+          type: string
+        Email:
+          type: string
+        Address:
+          type: string
+        City:
+          type: string
+        State:
+          type: string
+        PostalCode:
+          type: string
+        LineItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/LineItem'
+    Error:
       type: object
       properties:
         flag:
           type: boolean
-          description: Success flag.
+          description: Workiz success flag; false on error.
+        code:
+          type: integer
         data:
-          type: object
-          additionalProperties: true
-    JobUpdateInput:
-      allOf:
-      - type: object
-        required:
-        - UUID
-        properties:
-          UUID:
-            type: string
-      - $ref: '#/components/schemas/JobInput'
-    JobAssignmentInput:
-      type: object
-      required:
-      - UUID
-      - User
-      properties:
-        UUID:
           type: string
-          description: The UUID of the job.
-        User:
-          type: string
-          description: The user (team member) to assign or unassign.
+          description: Human-readable error message.
     Job:
       type: object
       description: A Workiz job (work order).
@@ -313,57 +303,54 @@ components:
         CreatedDate:
           type: string
           format: date-time
-    JobInput:
+    LineItem:
+      type: object
+      properties:
+        name:
+          type: string
+        quantity:
+          type: number
+        unitPrice:
+          type: number
+        taxable:
+          type: boolean
+    JobAssignmentInput:
       type: object
       required:
-      - JobType
-      - JobDateTime
+      - UUID
+      - User
       properties:
-        JobType:
+        UUID:
           type: string
-        JobSource:
+          description: The UUID of the job.
+        User:
           type: string
-        JobDateTime:
-          type: string
-          format: date-time
-        JobEndDateTime:
-          type: string
-          format: date-time
-        Comments:
-          type: string
-        FirstName:
-          type: string
-        LastName:
-          type: string
-        Phone:
-          type: string
-        Email:
-          type: string
-        Address:
-          type: string
-        City:
-          type: string
-        State:
-          type: string
-        PostalCode:
-          type: string
-        LineItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/LineItem'
-  responses:
-    Unauthorized:
-      description: Missing or invalid API token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+          description: The user (team member) to assign or unassign.
+    JobUpdateInput:
+      allOf:
+      - type: object
+        required:
+        - UUID
+        properties:
+          UUID:
+            type: string
+      - $ref: '#/components/schemas/JobInput'
+    JobResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/Job'
+    GenericResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+          description: Success flag.
+        data:
+          type: object
+          additionalProperties: true
   parameters:
     JobUUID:
       name: UUID
@@ -372,3 +359,16 @@ components:
       description: The UUID of the job.
       schema:
         type: string
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

@@ -62,17 +62,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        flag:
-          type: boolean
-          description: Workiz success flag; false on error.
-        code:
-          type: integer
-        data:
-          type: string
-          description: Human-readable error message.
     TimeOffListResponse:
       type: object
       properties:
@@ -97,15 +86,26 @@ components:
           format: date-time
         reason:
           type: string
+    Error:
+      type: object
+      properties:
+        flag:
+          type: boolean
+          description: Workiz success flag; false on error.
+        code:
+          type: integer
+        data:
+          type: string
+          description: Human-readable error message.
   responses:
-    Unauthorized:
-      description: Missing or invalid API token.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Missing or invalid API token.
       content:
         application/json:
           schema:
