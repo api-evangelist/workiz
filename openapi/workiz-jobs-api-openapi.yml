@@ -185,17 +185,15 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    JobListResponse:
+    GenericResponse:
       type: object
       properties:
         flag:
           type: boolean
+          description: Success flag.
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Job'
-        has_more:
-          type: boolean
+          type: object
+          additionalProperties: true
     JobInput:
       type: object
       required:
@@ -234,17 +232,18 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LineItem'
-    Error:
+    JobAssignmentInput:
       type: object
+      required:
+      - UUID
+      - User
       properties:
-        flag:
-          type: boolean
-          description: Workiz success flag; false on error.
-        code:
-          type: integer
-        data:
+        UUID:
           type: string
-          description: Human-readable error message.
+          description: The UUID of the job.
+        User:
+          type: string
+          description: The user (team member) to assign or unassign.
     Job:
       type: object
       description: A Workiz job (work order).
@@ -303,6 +302,24 @@ components:
         CreatedDate:
           type: string
           format: date-time
+    Error:
+      type: object
+      properties:
+        flag:
+          type: boolean
+          description: Workiz success flag; false on error.
+        code:
+          type: integer
+        data:
+          type: string
+          description: Human-readable error message.
+    JobResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/Job'
     LineItem:
       type: object
       properties:
@@ -314,18 +331,17 @@ components:
           type: number
         taxable:
           type: boolean
-    JobAssignmentInput:
+    JobListResponse:
       type: object
-      required:
-      - UUID
-      - User
       properties:
-        UUID:
-          type: string
-          description: The UUID of the job.
-        User:
-          type: string
-          description: The user (team member) to assign or unassign.
+        flag:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Job'
+        has_more:
+          type: boolean
     JobUpdateInput:
       allOf:
       - type: object
@@ -335,22 +351,6 @@ components:
           UUID:
             type: string
       - $ref: '#/components/schemas/JobInput'
-    JobResponse:
-      type: object
-      properties:
-        flag:
-          type: boolean
-        data:
-          $ref: '#/components/schemas/Job'
-    GenericResponse:
-      type: object
-      properties:
-        flag:
-          type: boolean
-          description: Success flag.
-        data:
-          type: object
-          additionalProperties: true
   parameters:
     JobUUID:
       name: UUID
@@ -360,14 +360,14 @@ components:
       schema:
         type: string
   responses:
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Missing or invalid API token.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API token.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
