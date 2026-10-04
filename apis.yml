@@ -151,6 +151,9 @@ apis:
   - type: OpenCollection
     url: collections/workiz.opencollection.json
 common:
+- type: CapabilityMap
+  url: capabilities/workiz-capability-edges.yml
+  name: Workiz Business Capability Map
 - type: AgenticAccess
   url: agentic-access/workiz-agentic-access.yml
 - type: DomainSecurity

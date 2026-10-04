@@ -1,0 +1,33 @@
+slug: workiz
+provider: Workiz
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Leads
+  spec_file: workiz-leads-api-openapi.yml
+  capability_id: BC-410.30
+  capability_id_l1: BC-410
+  capability_name: Opportunity & Pipeline Management
+  confidence: 0.82
+  evidence: '''listLeads  List leads'', ''createLead  Create a lead'', schemas ''Lead, LeadInput, LeadUpdateInput'''
+  reason: Straightforward CRM lead capture and update lifecycle, which is exactly Opportunity & Pipeline
+    Management ('Lead, opportunity, deal lifecycle').
+- tag: Time Off
+  spec_file: workiz-time-off-api-openapi.yml
+  capability_id: BC-300.70
+  capability_id_l1: BC-300
+  capability_name: HR Operations Management
+  confidence: 0.72
+  evidence: '''listTimeOff  List time off'', ''getUserTimeOff  Get time off for a user'', schema ''TimeOff'''
+  reason: Absence/leave records per employee are classic HR administrative operations; mapped to HR Operations
+    Management. Read-only scope limits confidence slightly.
