@@ -119,14 +119,61 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    LeadUUID:
+      name: UUID
+      in: path
+      required: true
+      description: The UUID of the lead.
+      schema:
+        type: string
   schemas:
-    LeadResponse:
+    Lead:
       type: object
+      description: A Workiz lead (prospective work).
       properties:
-        flag:
-          type: boolean
-        data:
-          $ref: '#/components/schemas/Lead'
+        UUID:
+          type: string
+        SerialId:
+          type: integer
+        LeadType:
+          type: string
+        LeadSource:
+          type: string
+        Status:
+          type: string
+        FirstName:
+          type: string
+        LastName:
+          type: string
+        Phone:
+          type: string
+        Email:
+          type: string
+        Address:
+          type: string
+        City:
+          type: string
+        State:
+          type: string
+        PostalCode:
+          type: string
+        CreatedDate:
+          type: string
+          format: date-time
     LeadListResponse:
       type: object
       properties:
@@ -165,17 +212,6 @@ components:
           type: string
         Comments:
           type: string
-    Error:
-      type: object
-      properties:
-        flag:
-          type: boolean
-          description: Workiz success flag; false on error.
-        code:
-          type: integer
-        data:
-          type: string
-          description: Human-readable error message.
     LeadUpdateInput:
       allOf:
       - type: object
@@ -191,57 +227,21 @@ components:
             - lost
             description: Mark the lead active or lost.
       - $ref: '#/components/schemas/LeadInput'
-    Lead:
+    LeadResponse:
       type: object
-      description: A Workiz lead (prospective work).
       properties:
-        UUID:
-          type: string
-        SerialId:
+        flag:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/Lead'
+    Error:
+      type: object
+      properties:
+        flag:
+          type: boolean
+          description: Workiz success flag; false on error.
+        code:
           type: integer
-        LeadType:
+        data:
           type: string
-        LeadSource:
-          type: string
-        Status:
-          type: string
-        FirstName:
-          type: string
-        LastName:
-          type: string
-        Phone:
-          type: string
-        Email:
-          type: string
-        Address:
-          type: string
-        City:
-          type: string
-        State:
-          type: string
-        PostalCode:
-          type: string
-        CreatedDate:
-          type: string
-          format: date-time
-  responses:
-    Unauthorized:
-      description: Missing or invalid API token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    LeadUUID:
-      name: UUID
-      in: path
-      required: true
-      description: The UUID of the lead.
-      schema:
-        type: string
+          description: Human-readable error message.

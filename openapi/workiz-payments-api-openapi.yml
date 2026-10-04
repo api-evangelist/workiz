@@ -45,7 +45,34 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    PaymentResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+        data:
+          type: object
+          properties:
+            paymentId:
+              type: string
+            jobUUID:
+              type: string
+            amount:
+              type: number
     PaymentInput:
       type: object
       description: Payment recorded against a job. Modeled fields - Workiz confirms the addPayment operation; the exact body is gated behind the developer portal.
@@ -62,20 +89,6 @@ components:
           format: date
         note:
           type: string
-    PaymentResponse:
-      type: object
-      properties:
-        flag:
-          type: boolean
-        data:
-          type: object
-          properties:
-            paymentId:
-              type: string
-            jobUUID:
-              type: string
-            amount:
-              type: number
     Error:
       type: object
       properties:
@@ -95,16 +108,3 @@ components:
       description: The UUID of the job.
       schema:
         type: string
-  responses:
-    Unauthorized:
-      description: Missing or invalid API token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'

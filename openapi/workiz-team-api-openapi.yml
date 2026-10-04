@@ -62,26 +62,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    TeamListResponse:
-      type: object
-      properties:
-        flag:
-          type: boolean
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamMember'
-    Error:
-      type: object
-      properties:
-        flag:
-          type: boolean
-          description: Workiz success flag; false on error.
-        code:
-          type: integer
-        data:
-          type: string
-          description: Human-readable error message.
     TeamMember:
       type: object
       properties:
@@ -95,6 +75,15 @@ components:
           type: string
         active:
           type: boolean
+    TeamListResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMember'
     TeamMemberResponse:
       type: object
       properties:
@@ -102,6 +91,17 @@ components:
           type: boolean
         data:
           $ref: '#/components/schemas/TeamMember'
+    Error:
+      type: object
+      properties:
+        flag:
+          type: boolean
+          description: Workiz success flag; false on error.
+        code:
+          type: integer
+        data:
+          type: string
+          description: Human-readable error message.
   responses:
     Unauthorized:
       description: Missing or invalid API token.
