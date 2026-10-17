@@ -119,28 +119,29 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid API token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    LeadUUID:
-      name: UUID
-      in: path
-      required: true
-      description: The UUID of the lead.
-      schema:
-        type: string
   schemas:
+    LeadUpdateInput:
+      allOf:
+      - type: object
+        required:
+        - UUID
+        properties:
+          UUID:
+            type: string
+          Status:
+            type: string
+            enum:
+            - active
+            - lost
+            description: Mark the lead active or lost.
+      - $ref: '#/components/schemas/LeadInput'
+    LeadResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/Lead'
     Lead:
       type: object
       description: A Workiz lead (prospective work).
@@ -212,28 +213,6 @@ components:
           type: string
         Comments:
           type: string
-    LeadUpdateInput:
-      allOf:
-      - type: object
-        required:
-        - UUID
-        properties:
-          UUID:
-            type: string
-          Status:
-            type: string
-            enum:
-            - active
-            - lost
-            description: Mark the lead active or lost.
-      - $ref: '#/components/schemas/LeadInput'
-    LeadResponse:
-      type: object
-      properties:
-        flag:
-          type: boolean
-        data:
-          $ref: '#/components/schemas/Lead'
     Error:
       type: object
       properties:
@@ -245,3 +224,24 @@ components:
         data:
           type: string
           description: Human-readable error message.
+  parameters:
+    LeadUUID:
+      name: UUID
+      in: path
+      required: true
+      description: The UUID of the lead.
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

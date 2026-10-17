@@ -184,20 +184,48 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid API token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    JobAssignmentInput:
+      type: object
+      required:
+      - UUID
+      - User
+      properties:
+        UUID:
+          type: string
+          description: The UUID of the job.
+        User:
+          type: string
+          description: The user (team member) to assign or unassign.
+    JobUpdateInput:
+      allOf:
+      - type: object
+        required:
+        - UUID
+        properties:
+          UUID:
+            type: string
+      - $ref: '#/components/schemas/JobInput'
+    GenericResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+          description: Success flag.
+        data:
+          type: object
+          additionalProperties: true
+    JobListResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Job'
+        has_more:
+          type: boolean
     Job:
       type: object
       description: A Workiz job (work order).
@@ -256,49 +284,13 @@ components:
         CreatedDate:
           type: string
           format: date-time
-    JobListResponse:
+    JobResponse:
       type: object
       properties:
         flag:
           type: boolean
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Job'
-        has_more:
-          type: boolean
-    JobAssignmentInput:
-      type: object
-      required:
-      - UUID
-      - User
-      properties:
-        UUID:
-          type: string
-          description: The UUID of the job.
-        User:
-          type: string
-          description: The user (team member) to assign or unassign.
-    Error:
-      type: object
-      properties:
-        flag:
-          type: boolean
-          description: Workiz success flag; false on error.
-        code:
-          type: integer
-        data:
-          type: string
-          description: Human-readable error message.
-    JobUpdateInput:
-      allOf:
-      - type: object
-        required:
-        - UUID
-        properties:
-          UUID:
-            type: string
-      - $ref: '#/components/schemas/JobInput'
+          $ref: '#/components/schemas/Job'
     LineItem:
       type: object
       properties:
@@ -310,22 +302,6 @@ components:
           type: number
         taxable:
           type: boolean
-    GenericResponse:
-      type: object
-      properties:
-        flag:
-          type: boolean
-          description: Success flag.
-        data:
-          type: object
-          additionalProperties: true
-    JobResponse:
-      type: object
-      properties:
-        flag:
-          type: boolean
-        data:
-          $ref: '#/components/schemas/Job'
     JobInput:
       type: object
       required:
@@ -364,6 +340,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LineItem'
+    Error:
+      type: object
+      properties:
+        flag:
+          type: boolean
+          description: Workiz success flag; false on error.
+        code:
+          type: integer
+        data:
+          type: string
+          description: Human-readable error message.
   parameters:
     JobUUID:
       name: UUID
@@ -372,3 +359,16 @@ components:
       description: The UUID of the job.
       schema:
         type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

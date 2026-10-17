@@ -61,20 +61,16 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid API token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    TimeOffListResponse:
+      type: object
+      properties:
+        flag:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TimeOff'
     TimeOff:
       type: object
       properties:
@@ -90,15 +86,6 @@ components:
           format: date-time
         reason:
           type: string
-    TimeOffListResponse:
-      type: object
-      properties:
-        flag:
-          type: boolean
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/TimeOff'
     Error:
       type: object
       properties:
@@ -110,3 +97,16 @@ components:
         data:
           type: string
           description: Human-readable error message.
+  responses:
+    Unauthorized:
+      description: Missing or invalid API token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
