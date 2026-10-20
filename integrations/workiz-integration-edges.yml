@@ -11,6 +11,7 @@ checked:
 - https://n8n.io/integrations/workiz/
 - https://zapier.com/api/v4/apps/
 - https://zapier.com/apps/workiz/integrations
+- https://www.workiz.com/integrations/
 summary: null
 marketplace_apps:
 - marketplace: zapier
@@ -63,6 +64,15 @@ marketplace_apps:
   - key: WORKIZ_SET_PRIMARY_TECHNICIAN
   - key: WORKIZ_UPDATE_JOB
   - key: WORKIZ_UPDATE_LEAD
+- marketplace: own
+  channel: partner-built
+  app: workiz
+  url: https://www.workiz.com/integrations/
+  app_count: 18
+  adapter: sweep-field-service.py:workiz
+  listed: 7
+  note: only domain-linked (or labelled register-name) vendors are written; unknown-builder listings stay out of
+    position shares
 edges:
 - partner_name: Zapier
   partner: zapier
@@ -475,6 +485,208 @@ edges:
   direction: third-party
   category: eCommerce
   partner_url: https://woocommerce.com/products/woocommerce-zapier/?utm_source=zapier&utm_medium=website&utm_campaign=integration
+- partner_name: Mailchimp
+  app: Mailchimp
+  partner: mailchimp
+  partner_match: domain+name-among-holders
+  type: marketplace
+  marketplace: own
+  channel: unknown
+  relationship: platform-app
+  direction: unknown
+  evidence: https://www.workiz.com/integrations/mailchimp/
+  category: Workiz integration
+  contract_reference:
+    register: Workiz integrations (workiz.com/integrations -> integration pages; names only)
+    spec_file: null
+    role: workiz-app-builder-unstated
+    registered_name: Mailchimp
+    matched_domain: mailchimp.com
+    matched_by: domain+name-among-holders
+    listings: 1
+    sample_apps:
+    - Mailchimp
+    signal_note: 'the listing does not state who built the connector: direction unknown, kept out of position shares'
+    detected_by: sweep-field-service.py
+    detected: '2026-10-20'
+    identity_source: wikidata Q6735673 'Mailchimp' P856 https://mailchimp.com/ (wikidata P856, labelled provenance
+      step; Kin 2026-10-15 decision 1)
+  detected_by: sweep-field-service.py
+  detected: '2026-10-20'
+- partner_name: Thumbtack
+  app: Thumbtack
+  partner: thumbtack
+  partner_match: domain
+  type: marketplace
+  marketplace: own
+  channel: unknown
+  relationship: platform-app
+  direction: unknown
+  evidence: https://www.workiz.com/integrations/thumbtack/
+  category: Workiz integration
+  contract_reference:
+    register: Workiz integrations (workiz.com/integrations -> integration pages; names only)
+    spec_file: null
+    role: workiz-app-builder-unstated
+    registered_name: Thumbtack
+    matched_domain: thumbtack.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - Thumbtack
+    signal_note: 'the listing does not state who built the connector: direction unknown, kept out of position shares'
+    detected_by: sweep-field-service.py
+    detected: '2026-10-20'
+    identity_source: wikidata Q7798846 'Thumbtack' P856 http://www.thumbtack.com/ (wikidata P856, labelled provenance
+      step; Kin 2026-10-15 decision 1)
+  detected_by: sweep-field-service.py
+  detected: '2026-10-20'
+- partner_name: Yelp
+  app: Yelp
+  partner: yelp
+  partner_match: domain
+  type: marketplace
+  marketplace: own
+  channel: unknown
+  relationship: platform-app
+  direction: unknown
+  evidence: https://www.workiz.com/integrations/yelp/
+  category: Workiz integration
+  contract_reference:
+    register: Workiz integrations (workiz.com/integrations -> integration pages; names only)
+    spec_file: null
+    role: workiz-app-builder-unstated
+    registered_name: Yelp
+    matched_domain: yelp.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - Yelp
+    signal_note: 'the listing does not state who built the connector: direction unknown, kept out of position shares'
+    detected_by: sweep-field-service.py
+    detected: '2026-10-20'
+    identity_source: wikidata Q2299611 'Yelp' P856 https://www.yelp.com/ (wikidata P856, labelled provenance step;
+      Kin 2026-10-15 decision 1)
+  detected_by: sweep-field-service.py
+  detected: '2026-10-20'
+- partner_name: Zapier
+  app: Zapier
+  partner: zapier
+  partner_match: domain
+  type: marketplace
+  marketplace: own
+  channel: unknown
+  relationship: platform-app
+  direction: unknown
+  evidence: https://www.workiz.com/integrations/zapier/
+  category: Workiz integration
+  contract_reference:
+    register: Workiz integrations (workiz.com/integrations -> integration pages; names only)
+    spec_file: null
+    role: workiz-app-builder-unstated
+    registered_name: Zapier
+    matched_domain: zapier.com
+    matched_by: domain
+    listings: 1
+    sample_apps:
+    - Zapier
+    signal_note: 'the listing does not state who built the connector: direction unknown, kept out of position shares'
+    detected_by: sweep-field-service.py
+    detected: '2026-10-20'
+    identity_source: wikidata Q27150165 'Zapier' P856 http://zapier.com (wikidata P856, labelled provenance step;
+      Kin 2026-10-15 decision 1)
+  detected_by: sweep-field-service.py
+  detected: '2026-10-20'
+- partner_name: Angi
+  app: Angi
+  partner: angi
+  partner_match: register-name
+  type: marketplace
+  marketplace: own
+  channel: unknown
+  relationship: platform-app
+  direction: unknown
+  evidence: https://www.workiz.com/integrations/angi-leads/
+  category: Workiz integration
+  contract_reference:
+    register: Workiz integrations (workiz.com/integrations -> integration pages; names only)
+    spec_file: null
+    role: workiz-app-builder-unstated
+    registered_name: Angi
+    matched_domain: null
+    matched_by: register-name
+    listings: 1
+    sample_apps:
+    - Angi
+    register_name_note: register-name 'angi' = angi; no wikidata P856
+    signal_note: 'the listing does not state who built the connector: direction unknown, kept out of position shares'
+    detected_by: sweep-field-service.py
+    detected: '2026-10-20'
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  detected_by: sweep-field-service.py
+  detected: '2026-10-20'
+- partner_name: CompanyCam
+  app: CompanyCam
+  partner: companycam
+  partner_match: register-name
+  type: marketplace
+  marketplace: own
+  channel: unknown
+  relationship: platform-app
+  direction: unknown
+  evidence: https://www.workiz.com/integrations/companycam/
+  category: Workiz integration
+  contract_reference:
+    register: Workiz integrations (workiz.com/integrations -> integration pages; names only)
+    spec_file: null
+    role: workiz-app-builder-unstated
+    registered_name: CompanyCam
+    matched_domain: null
+    matched_by: register-name
+    listings: 1
+    sample_apps:
+    - CompanyCam
+    register_name_note: register-name 'companycam' = companycam; no wikidata P856
+    signal_note: 'the listing does not state who built the connector: direction unknown, kept out of position shares'
+    detected_by: sweep-field-service.py
+    detected: '2026-10-20'
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  detected_by: sweep-field-service.py
+  detected: '2026-10-20'
+- partner_name: QuickBooks
+  app: QuickBooks
+  partner: quickbooks
+  partner_match: register-name
+  type: marketplace
+  marketplace: own
+  channel: unknown
+  relationship: platform-app
+  direction: unknown
+  evidence: https://www.workiz.com/integrations/quickbooks/
+  category: Workiz integration
+  contract_reference:
+    register: Workiz integrations (workiz.com/integrations -> integration pages; names only)
+    spec_file: null
+    role: workiz-app-builder-unstated
+    registered_name: QuickBooks
+    matched_domain: null
+    matched_by: register-name
+    listings: 1
+    sample_apps:
+    - QuickBooks
+    register_name_note: register-name 'quickbooks' = quickbooks; wikidata P856 intuit.com agrees or unheld
+    signal_note: 'the listing does not state who built the connector: direction unknown, kept out of position shares'
+    detected_by: sweep-field-service.py
+    detected: '2026-10-20'
+    identity_source: register-name
+    identity_note: register gave only the name; exact normalised match to the repo's apis.yml name, one repo, Wikidata
+      P856 not contradicting (Kin 2026-10-20 decision 2)
+  detected_by: sweep-field-service.py
+  detected: '2026-10-20'
 templates:
 - title: Add new Workiz jobs to Google Sheets as rows for seamless tracking
   url: https://zapier.com/apps/google-sheets/integrations/workiz/1312697/add-new-workiz-jobs-to-google-sheets-as-rows-for-seamless-tracking
